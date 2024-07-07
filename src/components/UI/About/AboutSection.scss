@@ -1,0 +1,72 @@
+/* about-section.css */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  .col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  
+  .about__section {
+    margin-top: 280px;
+  }
+  
+  .about-page {
+    margin-top: 0px;
+  }
+  
+  .default-page {
+    margin-top: 280px;
+  }
+  
+  .section__subtitle {
+    font-size: 1.5rem;
+    color:  #f9a826;
+  }
+  
+  .section__title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color:  #000d6b;
+  }
+  
+  .section__description {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .w-100 {
+    width: 100%;
+  }
+  
+  .about__section-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .ri-checkbox-circle-line {
+    margin-right: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .col-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+

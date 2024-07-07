@@ -1,0 +1,87 @@
+// footer.scss
+.main_container {
+    background-color: #0A0A3E;
+    color: white;
+    padding: 20px 0;
+  
+    .footer_container {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 50px;
+      gap: 1rem;
+  
+      div {
+        flex: 1;
+  
+        h1 {
+          margin-bottom: 0.5rem;
+          color: #FFFFFF;
+          font-size: 2rem;
+        }
+  
+        ul {
+          list-style: none;
+          padding: 0;
+  
+          li {
+            margin-bottom: 0.25rem;
+          }
+        }
+  
+        p {
+          font-size: 1.2rem;
+          line-height: 1.6;
+          color: #ccc;
+        }
+  
+        .social_links {
+          a {
+            margin-right: 10px;
+            color: #fff;
+            font-size: 1.2rem;
+          }
+        }
+  
+        form {
+          display: flex;
+          margin-top: 1rem;
+  
+          input {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            margin-right: 0.5rem;
+          }
+  
+          button {
+            padding: 0.5rem 1rem;
+            background-color: #f9a826;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  
+    .footer_bottom {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+  
+  // Media queries for responsive adjustments
+  @media (max-width: 768px) {
+    .footer_container {
+      flex-direction: column;
+      align-items: center;
+      
+      div {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  

@@ -1,0 +1,28 @@
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: start; 
+  }
+  
+  .contact-form-section {
+    width: 50%;
+  }
+  
+  .contact-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .contact-info-section {
+    width: 40%;
+  }
+  
+  .social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #000d6b; // Ensuring color matches the icons
+  }
+  
+  

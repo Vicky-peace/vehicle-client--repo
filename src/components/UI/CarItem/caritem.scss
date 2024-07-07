@@ -1,0 +1,45 @@
+.main{
+    max-width: 1280px;
+    width: 100%;
+    margin-bottom: 3rem;
+
+    h2{
+        color:  #f9a826;
+        margin-bottom: 1rem;
+    }
+
+    .car-cards-item{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px){
+    .main{
+        h2{
+            font-size: 2rem;
+        }
+        .car-cards-item{
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media (max-width: 500px){
+    .main{
+        h2{
+            font-size: 1.5rem;
+        }
+        .car-cards-item{
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
+
+@media (max-width: 320px){
+    .main{
+        h2{
+            font-size: 1.2rem;
+        }
+    }
+}
