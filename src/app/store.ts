@@ -1,27 +1,42 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import {persistStore, persistReducer} from "redux-persist";
+import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import {api} from '../sevices/auth';
+import { api } from '../sevices/rtk-api/auth';
 import authReducer from '../sevices/slices/authSlice';
+import { vehiclesApi } from "../sevices/rtk-api/vehicleApi";
+import vehiclesReducer, {VehiclesState} from "../sevices/slices/vehiclesSlice";
 
-const persustConfig = {
+const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'],
-}
+};
 
-const persistedReducer = persistReducer(persustConfig, authReducer);
+// Combine reducers
+const rootReducer = combineReducers({
+    auth: authReducer,
+    [api.reducerPath]: api.reducer,
+    vehicles: vehiclesReducer,
+    [vehiclesApi.reducerPath]: vehiclesApi.reducer,
+});
 
+// Persist combined reducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// Define the RootState type
+export type RootState = ReturnType<typeof rootReducer>;
+
+// Configure store
 export const store = configureStore({
-    reducer:{
-        auth: persistedReducer,
-        [api.reducerPath]: api.reducer,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false,
-    }).concat(api.middleware),
-    });
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }).concat(api.middleware, vehiclesApi.middleware),
+});
 
-    export const persistor = persistStore(store);
-    setupListeners(store.dispatch);
+// Create persistor
+export const persistor = persistStore(store);
+
+// Setup listeners for RTK-Query
+setupListeners(store.dispatch);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useRegisterMutation } from '../../../sevices/auth';
+import { useRegisterMutation } from '../../../sevices/rtk-api/auth';
 import { setUser } from '../../../sevices/slices/authSlice';
 import './register.scss';
 import { toast } from 'react-toastify';

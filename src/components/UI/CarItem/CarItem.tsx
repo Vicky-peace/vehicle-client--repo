@@ -10,13 +10,14 @@ const CarItem = () => {
        
        {
          carData.slice(0,6).map((car: Car) =>(
-             <CarCard
-           key={car.id}
-           image={car.imgUrl}
-           carName={car.carName}
-           price={car.price}
-           model={car.model}
-         />
+          <CarCard
+          key={car.id}
+          id={car.id}
+          image={car.imgUrl}
+          carName={car.carName}
+          price={car.price}
+          model={car.model}
+        />
          ))
        }
      </div>

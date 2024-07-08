@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../../sevices/auth';
+import { useLoginMutation } from '../../../sevices/rtk-api/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../sevices/slices/authSlice';
 import { toast } from 'react-toastify';

@@ -19,6 +19,19 @@ import BookingHistory from './pages/Dashboard/user/BookingHistory.tsx';
 import CurrentBookings from './pages/Dashboard/user/CurrentBookings.tsx';
 import AccountSettings from './pages/Dashboard/user/AccountSettings.tsx';
 
+import VehicleDetails from './pages/vehicleDetails/VehicleDetails.tsx';
+import VehicleList from './pages/vehicleList/VehicleList.tsx';
+import BookingPage from './pages/booking/BookingPage.tsx';
+
+import AdminLogin from './pages/Dashboard/Admin/AdminLogin.tsx';
+import AdminLayout from './pages/Dashboard/Admin/AdminLayout.tsx';
+import AdminDashboard from './pages/Dashboard/Admin/AdminDashBoard.tsx';
+import ManageVehicles from './pages/Dashboard/Admin/ManageVehicles.tsx';
+import ManageUsers from './pages/Dashboard/Admin/ManageUsers.tsx';
+import Reports from './pages/Dashboard/Admin/Reports.tsx';
+import ManageLocations from './pages/Dashboard/Admin/ManageLocations.tsx';
+import CustomerSupportTickets from './pages/Dashboard/Admin/CustomerSupport.tsx';
+import FleetManagement from './pages/Dashboard/Admin/FleetManagement.tsx';
 
 
 
@@ -54,7 +67,41 @@ const router = createBrowserRouter([
     { path: 'current-bookings', element: <CurrentBookings /> },
     { path: 'account-settings', element: <AccountSettings /> },
   ],
- }
+ },
+ {
+  path: '/cars',
+  element: <Layout><VehicleList /></Layout>,
+  errorElement: <NotFound />,
+},
+{
+  path: '/booking/:vehicleId',
+  element: <Layout><BookingPage /></Layout>,
+  errorElement: <NotFound />,
+},
+{
+  path: '/vehicle-details/:vehicleId',
+  element: <Layout><VehicleDetails /></Layout>,
+  errorElement: <NotFound />,
+},
+{
+  path: '/admin/login',
+  element: <AdminLogin />,
+  errorElement: <NotFound />,
+},
+{
+  path: '/admin',
+  element: <AdminLayout />,
+  errorElement: <NotFound />,
+  children: [
+    { path: '', element: <AdminDashboard /> },
+    { path: 'manage-vehicles', element: <ManageVehicles /> },
+    { path: 'manage-users', element: <ManageUsers /> },
+    { path: 'reports', element: <Reports /> },
+    { path: 'manage-locations', element: <ManageLocations /> },
+    { path: 'customer-support-tickets', element: <CustomerSupportTickets /> },
+    { path: 'fleet-management', element: <FleetManagement /> },
+  ],
+},
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
