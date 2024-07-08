@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound/NotFound.tsx';
 import AboutSection from './components/UI/About/AboutSection.tsx';
 import Contact from './pages/Contact/Contact.tsx';
 import Layout from './components/Layout/Layout.tsx';
+import AuthPage from './components/auth/Auth.tsx';
+
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,12 @@ const router = createBrowserRouter([
     path: '/contact',
     element: <Layout><Contact/></Layout>,
     errorElement: <NotFound/>,
-  }
+  },
+ {
+  path: '/auth',
+  element: <AuthPage/>,
+  errorElement: <NotFound/>,
+ }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
