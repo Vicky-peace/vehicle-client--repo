@@ -1,12 +1,15 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { useRegisterMutation } from '../../../sevices/auth';
+import { setUser } from '../../../sevices/slices/authSlice';
 import './register.scss';
 
 const registerSchema = Yup.object().shape({
-  fullName: Yup.string().required('Required'),
+  full_name: Yup.string().required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
-  contactPhone: Yup.string().required('Required'),
+  contact_phone: Yup.string().required('Required'),
   address: Yup.string().required('Required'),
   password: Yup.string().required('Required'),
 });
@@ -16,9 +19,16 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
-  const handleRegister = (values: { fullName: string; email: string; contactPhone: string; address: string; password: string }) => {
-    // Logic for registration
-    // If registration is successful, switch to login view
+  const dispatch = useDispatch();
+  const [register] = useRegisterMutation();
+  const handleRegister = async (values: { full_name: string; email: string; contact_phone: string; address: string; password: string }) => {
+    try {
+      const userData = await register(values).unwrap();
+      dispatch(setUser(userData));
+      switchToLogin();
+    } catch (error) {
+      console.error('Failed to register', error);
+    }
     switchToLogin();
   };
 
@@ -26,17 +36,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
     <div className="register-form">
       <h2 className='text-center font-bold'>Register</h2>
       <Formik
-        initialValues={{ fullName: '', email: '', contactPhone: '', address: '', password: '' }}
+        initialValues={{ full_name: '', email: '', contact_phone: '', address: '', password: '' }}
         validationSchema={registerSchema}
         onSubmit={handleRegister}
       >
         {({ isSubmitting }) => (
           <Form>
-            <Field type="text" name="fullName" placeholder="Full Name" />
+            <Field type="text" name="full_name" placeholder="Full Name" />
             <ErrorMessage name="fullName" component="div" className="error" />
             <Field type="email" name="email" placeholder="Email" />
             <ErrorMessage name="email" component="div" className="error" />
-            <Field type="text" name="contactPhone" placeholder="Contact Phone" />
+            <Field type="text" name="contact_phone" placeholder="Contact Phone" />
             <ErrorMessage name="contactPhone" component="div" className="error" />
             <Field type="text" name="address" placeholder="Address" />
             <ErrorMessage name="address" component="div" className="error" />

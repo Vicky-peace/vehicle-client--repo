@@ -2,6 +2,10 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../../sevices/auth';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../sevices/slices/authSlice';
+
 import './login.scss';
 
 const loginSchema = Yup.object().shape({
@@ -14,12 +18,20 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
+  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
 
-  const handleLogin = (values: { email: string; password: string }) => {
-    // Logic for login
-    // If login is successful, redirect to the dashboard
-    navigate('/');
+  const handleLogin = async (values: { email: string; password: string }) => {
+    try {
+      const userData = await login(values).unwrap();
+      dispatch(setUser(userData));
+      
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to login', error);
+        }
+  
   };
 
   return (
