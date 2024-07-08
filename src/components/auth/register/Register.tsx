@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useRegisterMutation } from '../../../sevices/auth';
 import { setUser } from '../../../sevices/slices/authSlice';
 import './register.scss';
+import { toast } from 'react-toastify';
 
 const registerSchema = Yup.object().shape({
   full_name: Yup.string().required('Required'),
@@ -25,11 +26,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
     try {
       const userData = await register(values).unwrap();
       dispatch(setUser(userData));
+      toast.success('Registration successful!');
       switchToLogin();
-    } catch (error) {
-      console.error('Failed to register', error);
+    } catch (error : any) {
+      const errorMessage = error.data?.error || 'Registration failed. Please try again.';
+      toast.error(errorMessage);
     }
-    switchToLogin();
+   
   };
 
   return (

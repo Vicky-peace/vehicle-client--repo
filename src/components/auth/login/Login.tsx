@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../../sevices/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../sevices/slices/authSlice';
+import { toast } from 'react-toastify';
 
 import './login.scss';
 
@@ -26,10 +27,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
     try {
       const userData = await login(values).unwrap();
       dispatch(setUser(userData));
-      
+      toast.success('Login successful!');
       navigate('/');
-    } catch (error) {
-      console.error('Failed to login', error);
+    } catch (error: any) {
+      const errorMessage = error.data?.error || 'Login failed. Invalid Credentials. Please try again.';
+      toast.error(errorMessage);
         }
   
   };

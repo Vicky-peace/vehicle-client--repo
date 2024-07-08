@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
+
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000'}),
@@ -21,4 +23,8 @@ export const api = createApi({
     })
 })
 
-export const { useLoginMutation, useRegisterMutation } = api;
+
+export const { useLoginMutation, useRegisterMutation }: {
+    useLoginMutation: any;
+    useRegisterMutation: any;
+} = api;
