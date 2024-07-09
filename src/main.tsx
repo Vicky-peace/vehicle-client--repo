@@ -74,7 +74,7 @@ const router = createBrowserRouter([
   errorElement: <NotFound />,
 },
 {
-  path: '/booking/:vehicleId',
+  path: '/booking/:vehiclId',
   element: <Layout><BookingPage /></Layout>,
   errorElement: <NotFound />,
 },

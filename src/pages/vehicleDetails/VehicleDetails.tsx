@@ -1,12 +1,27 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Car } from '../../types/types';
-import carData from '../../assets/data/carData';
+import { vehiclesApi } from '../../sevices/rtk-api/vehicleApi';
 import BookingForm from '../booking/BookingForm';
 
 const VehicleDetails: React.FC = () => {
   const { vehicleId } = useParams<{ vehicleId: string }>();
-  const vehicle: Car | undefined = carData.find(car => car.id === parseInt(vehicleId || ''));
+  const { data: vehicle, error, isLoading } = vehiclesApi.useGetVehicleQuery(parseInt(vehicleId || ''));
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-4">
+        <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-4">
+        <h2 className="text-2xl font-bold mb-4">Error fetching vehicle</h2>
+      </div>
+    );
+  }
 
   if (!vehicle) {
     return (
@@ -19,15 +34,15 @@ const VehicleDetails: React.FC = () => {
   return (
     <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-8">
       <div className="flex-1">
-        <h2 className="text-3xl font-bold mb-4 text-center">{vehicle.brand} {vehicle.carName} Details</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">{vehicle.manufacturer} {vehicle.model} Details</h2>
         <img 
-          src={vehicle.imgUrl} 
-          alt={`${vehicle.brand} ${vehicle.carName}`} 
+          src={vehicle.vehicle_image} 
+          alt={`${vehicle.manufacturer} ${vehicle.model}`} 
           className="w-full max-w-md h-auto object-contain rounded-lg mb-4 mx-auto" 
         />
-        <p className="text-lg mb-2">{vehicle.description}</p>
+        <p className="text-lg mb-2">{vehicle.features}</p>
         <p className="text-lg mb-2"><span className="font-bold">Model:</span> {vehicle.model}</p>
-        <p className="text-lg mb-4"><span className="font-bold">Price:</span> ${vehicle.price} per day</p>
+        <p className="text-lg mb-4"><span className="font-bold">Price:</span> ${vehicle.rental_rate} per day</p>
       </div>
       <div className="flex-1">
         <BookingForm vehicle={vehicle} />

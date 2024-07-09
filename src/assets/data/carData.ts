@@ -7,9 +7,9 @@ import img05 from "../all-images/cars-img/offer-toyota.png";
 import img06 from "../all-images/cars-img/mercedes-offer.png";
 import img07 from "../all-images/cars-img/toyota-offer-2.png";
 import img08 from "../all-images/cars-img/mercedes-offer.png";
-import { Car } from "../../types/types";
 
- const carData: Car[] = [
+
+ const carData = [
   {
     id: 1,
     brand: "Tesla",

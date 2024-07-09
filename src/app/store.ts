@@ -7,6 +7,7 @@ import authReducer from '../sevices/slices/authSlice';
 import { vehiclesApi } from "../sevices/rtk-api/vehicleApi";
 import vehiclesReducer from "../sevices/slices/vehiclesSlice";
 import {usersApi} from '../sevices/rtk-api/userApi';
+import { bookingsApi } from "../sevices/rtk-api/bookingApi";
 
 const persistConfig = {
     key: 'root',
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     vehicles: vehiclesReducer,
     [vehiclesApi.reducerPath]: vehiclesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [bookingsApi.reducerPath]: bookingsApi.reducer,
 });
 
 // Persist combined reducer
@@ -34,7 +36,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(api.middleware, vehiclesApi.middleware).concat(usersApi.middleware),
+        }).concat(api.middleware, vehiclesApi.middleware).concat(usersApi.middleware).concat(bookingsApi.middleware),
 });
 
 // Create persistor

@@ -17,7 +17,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">Book {vehicle.brand} {vehicle.carName}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Book {vehicle.model} {vehicle.manufacturer}</h2>
       <div className="mb-4">
         <label htmlFor="startDate" className="block text-lg font-medium mb-2">Start Date:</label>
         <input 

@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Car } from '../../types/types';
-import carData from '../../assets/data/carData';
 import CarCard from '../../components/carcard/CarCard';
+import { vehiclesApi } from '../../sevices/rtk-api/vehicleApi';
 
 const VehicleList: React.FC = () => {
-  const [vehicles, setVehicles] = useState<Car[]>([]);
+  const { data: vehicles, isLoading, error } = vehiclesApi.useGetVehiclesQuery();
   const [filteredVehicles, setFilteredVehicles] = useState<Car[]>([]);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [date, setDate] = useState<string>('');
-  const [duration, setDuration] = useState<number>(1);
 
   useEffect(() => {
-    setVehicles(carData);
-    setFilteredVehicles(carData);
-  }, []);
+    if (vehicles) {
+      filterVehicles(categoryFilter);
+    }
+  }, [vehicles, categoryFilter]);
 
   const handleCategoryFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const category = event.target.value;
     setCategoryFilter(category);
-    filterVehicles(category, date, duration);
   };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = event.target.value;
-    setDate(selectedDate);
-    filterVehicles(categoryFilter, selectedDate, duration);
-  };
+  const filterVehicles = (category: string) => {
+    if (!vehicles) return;
 
-  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDuration = parseInt(event.target.value);
-    setDuration(selectedDuration);
-    filterVehicles(categoryFilter, date, selectedDuration);
-  };
-
-  const filterVehicles = (category: string, date: string, duration: number) => {
     let filtered = vehicles;
 
     if (category !== 'all') {
-      filtered = filtered.filter(vehicle => vehicle.brand.toLowerCase() === category.toLowerCase());
+      filtered = filtered.filter(vehicle => vehicle.manufacturer.toLowerCase() === category.toLowerCase());
     }
-
-    // Add more filtering logic for date and duration if necessary
 
     setFilteredVehicles(filtered);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -60,41 +54,22 @@ const VehicleList: React.FC = () => {
             <option value="all">All</option>
             <option value="Tesla">Tesla</option>
             <option value="Toyota">Toyota</option>
-            <option value="BMW">BMW</option>
-            {/* Add more options based on available brands */}
+            <option value="BMW">BMW</option>m 
           </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-lg font-medium mb-2">Date:</label>
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={handleDateChange}
-            className="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="duration" className="block text-lg font-medium mb-2">Duration (days):</label>
-          <input
-            type="number"
-            id="duration"
-            value={duration}
-            onChange={handleDurationChange}
-            className="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            min="1"
-          />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredVehicles.map(vehicle => (
           <CarCard
-            key={vehicle.id}
-            id={vehicle.id}
-            image={vehicle.imgUrl}
-            carName={vehicle.carName}
-            price={vehicle.price}
+            key={vehicle.vehicle_id}
+            vehicle_id={vehicle.vehicle_id}
+            vehicle_image={vehicle.vehicle_image}
+            manufacturer={vehicle.manufacturer}
             model={vehicle.model}
+            rental_rate={vehicle.rental_rate}
+            availability={vehicle.availability}
+            year={vehicle.year}
+            fuel_type={vehicle.fuel_type}
           />
         ))}
       </div>

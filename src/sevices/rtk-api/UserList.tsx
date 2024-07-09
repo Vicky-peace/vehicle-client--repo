@@ -1,6 +1,6 @@
 import React from 'react';
 import { usersApi } from './userApi';
-import { TUsers } from './userApi';
+
 
 const UserList: React.FC = () => {
   const { data: users, error, isLoading } = usersApi.useGetUsersQuery();
