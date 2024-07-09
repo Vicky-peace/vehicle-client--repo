@@ -102,6 +102,7 @@ const router = createBrowserRouter([
     { path: 'fleet-management', element: <FleetManagement /> },
   ],
 },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useRegisterMutation } from '../../../sevices/rtk-api/auth';
 import { setUser } from '../../../sevices/slices/authSlice';
 import './register.scss';
 import { toast } from 'react-toastify';
+import { api } from '../../../sevices/rtk-api/auth';
 
 const registerSchema = Yup.object().shape({
   full_name: Yup.string().required('Required'),
@@ -21,7 +21,7 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
   const dispatch = useDispatch();
-  const [register] = useRegisterMutation();
+  const [register] = api.useRegisterMutation();
   const handleRegister = async (values: { full_name: string; email: string; contact_phone: string; address: string; password: string }) => {
     try {
       const userData = await register(values).unwrap();

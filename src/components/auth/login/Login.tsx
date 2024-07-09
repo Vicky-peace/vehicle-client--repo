@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../../sevices/rtk-api/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../sevices/slices/authSlice';
 import { toast } from 'react-toastify';
+import {api} from '../../../sevices/rtk-api/auth';
 
 import './login.scss';
 
@@ -20,7 +20,7 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
   const dispatch = useDispatch();
-  const [login] = useLoginMutation();
+  const [login] = api.useLoginMutation();
   const navigate = useNavigate();
 
   const handleLogin = async (values: { email: string; password: string }) => {

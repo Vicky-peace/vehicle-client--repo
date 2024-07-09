@@ -5,7 +5,8 @@ import storage from "redux-persist/lib/storage";
 import { api } from '../sevices/rtk-api/auth';
 import authReducer from '../sevices/slices/authSlice';
 import { vehiclesApi } from "../sevices/rtk-api/vehicleApi";
-import vehiclesReducer, {VehiclesState} from "../sevices/slices/vehiclesSlice";
+import vehiclesReducer from "../sevices/slices/vehiclesSlice";
+import {usersApi} from '../sevices/rtk-api/userApi';
 
 const persistConfig = {
     key: 'root',
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     [api.reducerPath]: api.reducer,
     vehicles: vehiclesReducer,
     [vehiclesApi.reducerPath]: vehiclesApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
 });
 
 // Persist combined reducer
@@ -32,7 +34,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(api.middleware, vehiclesApi.middleware),
+        }).concat(api.middleware, vehiclesApi.middleware).concat(usersApi.middleware),
 });
 
 // Create persistor
