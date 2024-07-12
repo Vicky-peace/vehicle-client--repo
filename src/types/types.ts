@@ -1,24 +1,22 @@
-export type CarSpecification = {
-  vehicle_id: number;
+export interface VehicleSpec {
   manufacturer: string;
   model: string;
   year: number;
   fuel_type: string;
-  vehicle_image: string;
-  engine_capacity?: string | null;
-  transmission?: string | null;
-  seating_capacity?: number | null;
-  color?: string | null;
-  features?: string | null;
-  created_at: string;
-  updated_at: string;
-};
+  engine_capacity: string;
+  transmission: string;
+  seating_capacity: number;
+  color: string;
+  features: string;
+}
 
-export type Car = {
-  vehicleSpec_id: number;
+export interface CarCardProps {
+  vehicle_id: number;
+  vehicle_image: string;
   rental_rate: number;
   availability: boolean;
-} & CarSpecification;
+  vehicleSpec: VehicleSpec;
+}
 
 
 export type Booking = {

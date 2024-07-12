@@ -5,7 +5,6 @@ import storage from "redux-persist/lib/storage";
 import { api } from '../sevices/rtk-api/auth';
 import authReducer from '../sevices/slices/authSlice';
 import { vehiclesApi } from "../sevices/rtk-api/vehicleApi";
-import vehiclesReducer from "../sevices/slices/vehiclesSlice";
 import {usersApi} from '../sevices/rtk-api/userApi';
 import { bookingsApi } from "../sevices/rtk-api/bookingApi";
 
@@ -18,7 +17,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authReducer,
     [api.reducerPath]: api.reducer,
-    vehicles: vehiclesReducer,
     [vehiclesApi.reducerPath]: vehiclesApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [bookingsApi.reducerPath]: bookingsApi.reducer,

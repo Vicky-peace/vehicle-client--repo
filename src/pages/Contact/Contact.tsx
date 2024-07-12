@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
-import './contact.scss'; 
 import ContactImg from '../../assets/all-images/drive.jpg';
 
 const socialLinks = [
@@ -24,37 +23,41 @@ const socialLinks = [
 
 const Contact = () => {
   return (
-    <>
-    <div className="contact-form-section">
-        <img src={ContactImg} alt="Contact Us" className="contact-img"/>
-        <h2>Contact</h2>
-
-    <div className="contact-container">
-      
-        <form>
-          <h3>Get In Touch</h3>
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Email" required />
-          <textarea placeholder="Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
+    <div className="bg-white">
+      <div className="relative w-full h-96">
+        <img src={ContactImg} alt="Contact Us" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <h2 className="text-3xl font-bold text-white">Contact</h2>
+        </div>
       </div>
-      <div className="contact-info-section">
-        <h3>Contact Information</h3>
-        <p>123 Elburgon, Nakuru, Kenya</p>
-        <p>Phone: +88683896366</p>
-        <p>Email: example@gmail.com</p>
-        <h3>Follow Us</h3>
-        <div className="social-icons">
-          {socialLinks.map((link, index) => (
-            <Link to={link.url} key={index}>
-              {link.icon}
-            </Link>
-          ))}
+
+      <div className="p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <form className="bg-gray-100 p-6 rounded-lg shadow-lg">
+            <h3 className="text-2xl font-semibold mb-4">Get In Touch</h3>
+            <input type="text" placeholder="Your Name" required className="w-full mb-4 p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <input type="email" placeholder="Email" required className="w-full mb-4 p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <textarea placeholder="Message" required className="w-full mb-4 p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <button type="submit" className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600">Send Message</button>
+          </form>
+
+          <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+            <h3 className="text-2xl font-semibold mb-4">Contact Information</h3>
+            <p className="mb-2">123 Elburgon, Nakuru, Kenya</p>
+            <p className="mb-2">Phone: +88683896366</p>
+            <p className="mb-4">Email: example@gmail.com</p>
+            <h3 className="text-2xl font-semibold mb-4">Follow Us</h3>
+            <div className="flex space-x-4">
+              {socialLinks.map((link, index) => (
+                <Link to={link.url} key={index} className="text-blue-500 hover:text-blue-700">
+                  {link.icon}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    </>
   );
 };
 

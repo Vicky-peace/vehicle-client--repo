@@ -74,12 +74,12 @@ const router = createBrowserRouter([
   errorElement: <NotFound />,
 },
 {
-  path: '/booking/:vehiclId',
+  path: '/booking/:id',
   element: <Layout><BookingPage /></Layout>,
   errorElement: <NotFound />,
 },
 {
-  path: '/vehicle-details/:vehicleId',
+  path: '/vehicle-details/:id',
   element: <Layout><VehicleDetails /></Layout>,
   errorElement: <NotFound />,
 },

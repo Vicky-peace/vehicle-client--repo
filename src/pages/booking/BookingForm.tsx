@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Car } from '../../types/types';
+import { CarCardProps } from '../../types/types';
 
 interface BookingFormProps {
-  vehicle: Car;
+  vehicle: CarCardProps;
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
@@ -11,13 +11,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
 
   const handleBooking = () => {
     // Handle booking logic here
-    alert('Booking successful!');
+    alert(`Booking successful for ${vehicle.vehicleSpec.model} from ${startDate} to ${endDate}!`);
     // Navigate or update state as needed
   };
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">Book {vehicle.model} {vehicle.manufacturer}</h2>
+    <div className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-4 text-center">Book {vehicle.vehicleSpec.manufacturer} {vehicle.vehicleSpec.model}</h2>
       <div className="mb-4">
         <label htmlFor="startDate" className="block text-lg font-medium mb-2">Start Date:</label>
         <input 

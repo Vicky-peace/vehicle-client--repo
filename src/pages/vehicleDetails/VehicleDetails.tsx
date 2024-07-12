@@ -1,52 +1,43 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { vehiclesApi } from '../../sevices/rtk-api/vehicleApi';
+import { ClipLoader } from 'react-spinners';
 import BookingForm from '../booking/BookingForm';
 
 const VehicleDetails: React.FC = () => {
-  const { vehicleId } = useParams<{ vehicleId: string }>();
-  const { data: vehicle, error, isLoading } = vehiclesApi.useGetVehicleQuery(parseInt(vehicleId || ''));
+  const { id } = useParams<{ id: string }>();
+  const parsedVehicleId = id ? parseInt(id, 10) : NaN;
 
-  if (isLoading) {
-    return (
-      <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Loading...</h2>
-      </div>
-    );
+  if (isNaN(parsedVehicleId)) {
+    console.error('Invalid vehicle ID:', id);
+    return <div>Invalid vehicle ID</div>;
   }
+  console.log('Vehicle ID:', id);
 
-  if (error) {
-    return (
-      <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Error fetching vehicle</h2>
-      </div>
-    );
-  }
+ 
+  const { data: vehicle, error, isLoading } = vehiclesApi.useGetVehicleQuery(parsedVehicleId);
+console.log(vehicle);
 
-  if (!vehicle) {
-    return (
-      <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Vehicle not found</h2>
-      </div>
-    );
-  }
+  if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#0000ff" size={150} /></div>;
+  if (error) return <div>Error: Failed to fetch vehicle details</div>;
+  if (!vehicle) return <div>Vehicle not found</div>;
 
   return (
-    <div className="container mx-auto p-4 flex flex-col lg:flex-row gap-8">
-      <div className="flex-1">
-        <h2 className="text-3xl font-bold mb-4 text-center">{vehicle.manufacturer} {vehicle.model} Details</h2>
-        <img 
-          src={vehicle.vehicle_image} 
-          alt={`${vehicle.manufacturer} ${vehicle.model}`} 
-          className="w-full max-w-md h-auto object-contain rounded-lg mb-4 mx-auto" 
-        />
-        <p className="text-lg mb-2">{vehicle.features}</p>
-        <p className="text-lg mb-2"><span className="font-bold">Model:</span> {vehicle.model}</p>
-        <p className="text-lg mb-4"><span className="font-bold">Price:</span> ${vehicle.rental_rate} per day</p>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">Vehicle Details</h1>
+      <div className="bg-white shadow-lg rounded-lg p-4">
+        <img src={vehicle.vehicle_image} alt={`${vehicle.vehicleSpec.manufacturer} ${vehicle.vehicleSpec.model}`} className="w-full h-64 object-cover rounded mb-4" />
+        <div className="text-lg">
+          <p><strong>Manufacturer:</strong> {vehicle.vehicleSpec.manufacturer}</p>
+          <p><strong>Model:</strong> {vehicle.vehicleSpec.model}</p>
+          <p><strong>Year:</strong> {vehicle.vehicleSpec.year}</p>
+          <p><strong>Fuel Type:</strong> {vehicle.vehicleSpec.fuel_type}</p>
+          <p><strong>Rental Rate:</strong> ${vehicle.rental_rate} per day</p>
+          <p><strong>Availability:</strong> {vehicle.availability ? 'Available' : 'Not Available'}</p>
+          <p><strong>Features:</strong> {vehicle.vehicleSpec.features}</p>
+        </div>
       </div>
-      <div className="flex-1">
-        <BookingForm vehicle={vehicle} />
-      </div>
+      <BookingForm vehicle={vehicle} />
     </div>
   );
 };
