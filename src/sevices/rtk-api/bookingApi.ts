@@ -8,7 +8,7 @@ export const bookingsApi = createApi({
         query: () => "/bookings",
         }),
         getBooking: builder.query<Booking, number>({
-        query: (id) => `/bookings/user${id}`,
+        query: (userId) => `/bookings/users/${userId}`,
         }),
         addBooking: builder.mutation<Booking, Partial<Booking>>({
         query: (booking) => ({

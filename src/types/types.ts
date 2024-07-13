@@ -19,18 +19,7 @@ export interface CarCardProps {
 }
 
 
-export type Booking = {
-  booking_id: number;
-  user_id: number;
-  vehicle_id: number;
-  location_id: number;
-  booking_date: string; 
-  return_date: string;  
-  total_amount: number; 
-  booking_status: 'Completed' | 'Pending' | 'Cancelled';
-  created_at: string; 
-  updated_at: string; 
-};
+
 
 
 export type Location ={
@@ -41,6 +30,21 @@ export type Location ={
   created_at: string;
   updated_at: string;
 }
+
+export type Booking = {
+  booking_id: number;
+  user_id: number;
+  vehicle_id: number;
+  location_id: number;
+  booking_date: string; 
+  return_date: string;  
+  total_amount: number; 
+  booking_status: 'Completed' | 'Pending' | 'Cancelled';
+  created_at: string; 
+  updated_at: string;
+  vehicle: CarCardProps;
+  location: Location; 
+};
 export interface Users {
   user_id: number;
   full_name: string;
