@@ -7,11 +7,10 @@ import { ClipLoader } from "react-spinners";
 const BookingHistory = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const userId = user ? user.user_id: null;
-  // Log userId to verify it's correct
-  console.log("UserID:", userId);
+
  
  const { data: bookings, error, isLoading } = bookingsApi.useGetBookingQuery(userId) as { data: Booking[] | undefined, error: any, isLoading: boolean };
-console.log('Bookings:', bookings);
+
    if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
   if (error) return <div>Error: Failed to fetch booking history</div>;
 

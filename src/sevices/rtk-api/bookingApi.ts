@@ -3,12 +3,15 @@ import { Booking } from "../../types/types";
 export const bookingsApi = createApi({
     reducerPath: "bookingsApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
+    tagTypes: ["Booking"],
     endpoints: (builder) => ({
         getBookings: builder.query<Booking[], void>({
         query: () => "/bookings",
+        providesTags: ["Booking"],
         }),
         getBooking: builder.query<Booking, number>({
         query: (userId) => `/bookings/users/${userId}`,
+        providesTags: [{ type: "Booking", id: "LIST" }],
         }),
         addBooking: builder.mutation<Booking, Partial<Booking>>({
         query: (booking) => ({
@@ -16,12 +19,14 @@ export const bookingsApi = createApi({
             method: "POST",
             body: booking,
         }),
+        invalidatesTags: ["Booking"],
         }),
         deleteBooking: builder.mutation<void, number>({
         query: (bookingId) => ({
             url: `/bookings/${bookingId}`,
             method: "DELETE",
         }),
+        invalidatesTags: ["Booking"],
         }),
     }),
     });

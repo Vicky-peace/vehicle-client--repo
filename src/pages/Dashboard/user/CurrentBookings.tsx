@@ -1,13 +1,18 @@
 import React from 'react';
 import { bookingsApi } from '../../../sevices/rtk-api/bookingApi';
 import { Booking } from '../../../types/types';
+import {useSelector} from 'react-redux';
+import { RootState } from '../../../app/store';
+import { ClipLoader } from 'react-spinners';
 
 const CurrentBookings: React.FC = () => {
+    const user = useSelector((state: RootState) => state.auth.user);
+    const userId = user ? user.user_id : null;
     // Fetch current bookings with a status of "Pending"
-    const { data: bookings, error, isLoading } = bookingsApi.useGetBookingsQuery();
+    const { data: bookings, error, isLoading } = bookingsApi.useGetBookingQuery(userId) as { data: Booking[] | undefined, error: any, isLoading: boolean };
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error</div>;
+    if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
+    if (error) return <div>Error: Failed to fetch booking history</div>;
 
     // Filter bookings with status "Pending"
     const currentBookings = bookings?.filter(booking => booking.booking_status === 'Pending');
@@ -20,10 +25,10 @@ const CurrentBookings: React.FC = () => {
                     <thead className="bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Vehicle ID
+                                Vehicle
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Location ID
+                                Location
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Booking Date
@@ -46,10 +51,10 @@ const CurrentBookings: React.FC = () => {
                         {currentBookings?.map((booking: Booking) => (
                             <tr key={booking.booking_id}>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-900">{booking.vehicle_id}</div>
+                                    <div className="text-sm text-gray-900">{booking.vehicle.vehicleSpec.manufacturer}</div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-900">{booking.location_id}</div>
+                                    <div className="text-sm text-gray-900">{booking.location.name}</div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-sm text-gray-900">{new Date(booking.booking_date).toLocaleString()}</div>
