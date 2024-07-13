@@ -17,7 +17,7 @@ export const vehiclesApi = createApi({
       }),
       addVehicle: builder.mutation<CarCardProps, Partial<CarCardProps>>({
         query: (newVehicle) => ({
-          url: '/vehicles',
+          url: '/vehicleSpecs',
           method: 'POST',
           body: newVehicle,
         }),
