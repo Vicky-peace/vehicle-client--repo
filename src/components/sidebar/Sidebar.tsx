@@ -4,8 +4,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import HistoryIcon from '@mui/icons-material/History';
 import BookIcon from '@mui/icons-material/Book';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link } from 'react-router-dom';
+import Logout from '../../pages/Dashboard/user/Logout';
 
 
 const Sidenav: React.FC = () => {
@@ -39,12 +39,7 @@ const Sidenav: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText primary="Account Settings" />
                 </ListItem>
-                <ListItem button onClick={() => console.log('Logout')} className="hover:bg-gray-700">
-                    <ListItemIcon className="text-white">
-                        <ExitToAppIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                </ListItem>
+                <Logout/>
             </List>
         </Drawer>
     );
