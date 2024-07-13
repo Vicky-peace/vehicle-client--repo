@@ -6,9 +6,24 @@ import { bookingsApi } from '../../sevices/rtk-api/bookingApi';
 import { locationApi } from '../../sevices/rtk-api/locationApi';
 import { ClipLoader } from 'react-spinners';
 import dayjs from 'dayjs';
+import {toast} from 'react-toastify';
 
 interface BookingFormProps {
   vehicle: CarCardProps;
+}
+
+interface BackendError {
+  data?: {
+    error?: {
+      issues?: Array<{
+        code: string;
+        expected: string;
+        received: string;
+        path: string[];
+        message: string;
+      }>;
+    };
+  };
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
@@ -34,8 +49,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
     const end = dayjs(endDate);
     const rentalDays = end.diff(start, 'day');
 
+
     if (rentalDays <= 0) {
-      alert('End date must be after start date.');
+      toast.error('End date must be after start date');
       return;
     }
 
@@ -54,13 +70,19 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
 
     try {
       await addBooking(bookingData).unwrap();
-      alert(`Booking successful for ${vehicle.vehicleSpec.model} from ${startDate} to ${endDate}!`);
-    } catch (error) {
+      toast.success(`Booking successful for ${vehicle.vehicleSpec.model} from ${startDate} to ${endDate}!`);
+    } catch (error: unknown) {
       console.error('Booking error:', error);
-      alert('Failed to book the vehicle. Please try again.');
+      const backendError = error as BackendError;
+      if (backendError.data?.error?.issues) {
+        backendError.data.error.issues.forEach((issue) => {
+          toast.error(issue.message);
+        });
+      } else {
+        toast.error('Failed to book the vehicle. Please try again.');
+      }
     }
   };
-
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4 text-center">Book {vehicle.vehicleSpec.manufacturer} {vehicle.vehicleSpec.model}</h2>
