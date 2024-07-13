@@ -16,7 +16,8 @@ const VehicleDetails: React.FC = () => {
 
  
   const { data: vehicle, error, isLoading } = vehiclesApi.useGetVehicleQuery(parsedVehicleId);
-console.log(vehicle);
+  console.log('Vehicle:', vehicle); 
+
 
   if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#0000ff" size={150} /></div>;
   if (error) return <div>Error: Failed to fetch vehicle details</div>;

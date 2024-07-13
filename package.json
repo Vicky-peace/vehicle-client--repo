@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-slick": "^0.23.13",
     "daisyui": "^4.12.10",
+    "dayjs": "^1.11.11",
     "formik": "^2.4.6",
     "lucide-react": "^0.400.0",
     "react": "^18.3.1",

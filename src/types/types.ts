@@ -26,8 +26,27 @@ export type Booking = {
   location_id: number;
   booking_date: string; 
   return_date: string;  
-  total_amount: string; 
+  total_amount: number; 
   booking_status: 'Completed' | 'Pending' | 'Cancelled';
   created_at: string; 
   updated_at: string; 
 };
+
+
+export type Location ={
+  location_id: number;
+  name: string;
+  address: string;
+  contact_phone: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface Users {
+  user_id: number;
+  full_name: string;
+  email: string;
+  contact_phone: string;
+  address: string;
+  role: string;
+  profile_image: string;
+}

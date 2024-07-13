@@ -26,7 +26,6 @@ interface CarCardProps {
 
 const CarCard: React.FC<CarCardProps> = ({
   vehicle_id,
-  vehicle_image,
   rental_rate,
   availability,
   vehicleSpec

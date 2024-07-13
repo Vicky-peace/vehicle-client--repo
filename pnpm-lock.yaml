@@ -29,6 +29,9 @@ importers:
       daisyui:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.39)
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
       formik:
         specifier: ^2.4.6
         version: 2.4.6(react@18.3.1)
@@ -1050,6 +1053,9 @@ packages:
   daisyui@4.12.10:
     resolution: {integrity: sha512-jp1RAuzbHhGdXmn957Z2XsTZStXGHzFfF0FgIOZj3Wv9sH7OZgLfXTRZNfKVYxltGUOBsG1kbWAdF5SrqjebvA==}
     engines: {node: '>=16.9.0'}
+
+  dayjs@1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
 
   debug@4.3.5:
     resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
@@ -2947,6 +2953,8 @@ snapshots:
       postcss-js: 4.0.1(postcss@8.4.39)
     transitivePeerDependencies:
       - postcss
+
+  dayjs@1.11.11: {}
 
   debug@4.3.5:
     dependencies:
