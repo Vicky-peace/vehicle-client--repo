@@ -1,74 +1,135 @@
 import React, { useState } from 'react';
-import { Button, TextField, Card, CardContent, Typography } from '@mui/material';
+import { Typography, Card, CardContent, TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { vehiclesApi } from '../../../sevices/rtk-api/vehicleApi';
 import { CarCardProps } from '../../../types/types';
+
+interface FormDataState {
+  rental_rate: number;
+  availability: boolean;
+  vehicle_image: File | null;
+  manufacturer: string;
+  model: string;
+  year: number;
+  fuel_type: string;
+  engine_capacity: string;
+  transmission: string;
+  seating_capacity: number;
+  color: string;
+  features: string;
+}
 
 const ManageVehicles: React.FC = () => {
   const { data: vehicles = [], refetch } = vehiclesApi.useGetVehiclesQuery();
   const [addVehicle] = vehiclesApi.useAddVehicleMutation();
   const [deleteVehicle] = vehiclesApi.useDeleteVehicleMutation();
 
-  const [manufacturer, setManufacturer] = useState<string>('');
-  const [model, setModel] = useState<string>('');
-  const [year, setYear] = useState<number>(0);
-  const [fuelType, setFuelType] = useState<string>('');
-  const [engineCapacity, setEngineCapacity] = useState<string>('');
-  const [transmission, setTransmission] = useState<string>('');
-  const [seatingCapacity, setSeatingCapacity] = useState<number>(0);
-  const [color, setColor] = useState<string>('');
-  const [features, setFeatures] = useState<string>('');
-  const [rentalRate, setRentalRate] = useState<number>(0);
-  const [availability, setAvailability] = useState<boolean>(false);
-  const [vehicleImage, setVehicleImage] = useState<string>('');
+  const [formData, setFormData] = useState<FormDataState>({
+    rental_rate: 0,
+    availability: true,
+    vehicle_image: null,
+    manufacturer: '',
+    model: '',
+    year: 0,
+    fuel_type: '',
+    engine_capacity: '',
+    transmission: '',
+    seating_capacity: 0,
+    color: '',
+    features: '',
+  });
 
-  const handleAddVehicle = async () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type, files } = e.target as HTMLInputElement;
+    if (type === 'file' && files) {
+      setFormData({ ...formData, [name]: files[0] });
+    } else if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: (e.target as HTMLInputElement).checked });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
+      let imageUrl = '';
+      if (formData.vehicle_image) {
+        const formDataImage = new FormData();
+        formDataImage.append('file', formData.vehicle_image);
+        formDataImage.append('upload_preset', 'upload');
+
+        const response = await axios.post(
+          'https://api.cloudinary.com/v1_1/dor27a2ut/image/upload',
+          formDataImage
+        );
+
+        if (response.status === 200) {
+          imageUrl = response.data.secure_url;
+        } else {
+          console.error('Failed to upload image:', response.statusText);
+          toast.error('Failed to upload image');
+          return;
+        }
+      }
+
       const vehicleData = {
         vehicleSpec: {
-          manufacturer,
-          model,
-          year,
-          fuel_type: fuelType,
-          engine_capacity: engineCapacity,
-          transmission,
-          seating_capacity: seatingCapacity,
-          color,
-          features,
+          manufacturer: formData.manufacturer,
+          model: formData.model,
+          year: formData.year,
+          fuel_type: formData.fuel_type,
+          engine_capacity: formData.engine_capacity,
+          transmission: formData.transmission,
+          seating_capacity: formData.seating_capacity,
+          color: formData.color,
+          features: formData.features,
         },
-        rental_rate: rentalRate,
-        availability,
-        vehicle_image: vehicleImage,
+        vehicle: {
+          rental_rate: formData.rental_rate,
+          availability: formData.availability,
+          vehicle_image: imageUrl,
+        }
       };
 
       await addVehicle(vehicleData).unwrap();
       refetch();
+      toast.success('Vehicle added successfully');
       clearForm();
-    } catch (error) {
-      console.error('Failed to add vehicle:', error);
+
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      toast.error('Failed to add vehicle');
     }
   };
 
   const clearForm = () => {
-    setManufacturer('');
-    setModel('');
-    setYear(0);
-    setFuelType('');
-    setEngineCapacity('');
-    setTransmission('');
-    setSeatingCapacity(0);
-    setColor('');
-    setFeatures('');
-    setRentalRate(0);
-    setAvailability(false);
-    setVehicleImage('');
+    setFormData({
+      rental_rate: 0,
+      availability: true,
+      vehicle_image: null,
+      manufacturer: '',
+      model: '',
+      year: 0,
+      fuel_type: '',
+      engine_capacity: '',
+      transmission: '',
+      seating_capacity: 0,
+      color: '',
+      features: '',
+    });
   };
 
   const handleDeleteVehicle = async (id: number) => {
     try {
       await deleteVehicle(id).unwrap();
       refetch();
+      toast.success('Vehicle deleted successfully');
     } catch (error) {
       console.error('Failed to delete vehicle:', error);
+      toast.error('Failed to delete vehicle');
     }
   };
 
@@ -78,107 +139,111 @@ const ManageVehicles: React.FC = () => {
       <Card className="mb-4">
         <CardContent>
           <Typography variant="h6">Add New Vehicle</Typography>
-          <form className="mt-4" onSubmit={(e) => { e.preventDefault(); handleAddVehicle(); }}>
+          <form className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4" onSubmit={handleSubmit}>
             <TextField
               label="Manufacturer"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={manufacturer}
-              onChange={(e) => setManufacturer(e.target.value)}
+              name="manufacturer"
+              value={formData.manufacturer}
+              onChange={handleChange}
             />
             <TextField
               label="Model"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
+              name="model"
+              value={formData.model}
+              onChange={handleChange}
             />
             <TextField
               label="Year"
               variant="outlined"
               fullWidth
-              className="mb-4"
               type="number"
-              value={year}
-              onChange={(e) => setYear(parseInt(e.target.value))}
+              name="year"
+              value={formData.year}
+              onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
             />
             <TextField
               label="Fuel Type"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={fuelType}
-              onChange={(e) => setFuelType(e.target.value)}
+              name="fuel_type"
+              value={formData.fuel_type}
+              onChange={handleChange}
             />
             <TextField
               label="Engine Capacity"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={engineCapacity}
-              onChange={(e) => setEngineCapacity(e.target.value)}
+              name="engine_capacity"
+              value={formData.engine_capacity}
+              onChange={handleChange}
             />
             <TextField
               label="Transmission"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={transmission}
-              onChange={(e) => setTransmission(e.target.value)}
+              name="transmission"
+              value={formData.transmission}
+              onChange={handleChange}
             />
             <TextField
               label="Seating Capacity"
               variant="outlined"
               fullWidth
-              className="mb-4"
               type="number"
-              value={seatingCapacity}
-              onChange={(e) => setSeatingCapacity(parseInt(e.target.value))}
+              name="seating_capacity"
+              value={formData.seating_capacity}
+              onChange={(e) => setFormData({ ...formData, seating_capacity: parseInt(e.target.value) })}
             />
             <TextField
               label="Color"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
+              name="color"
+              value={formData.color}
+              onChange={handleChange}
             />
             <TextField
               label="Features"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              value={features}
-              onChange={(e) => setFeatures(e.target.value)}
+              name="features"
+              value={formData.features}
+              onChange={handleChange}
             />
             <TextField
               label="Rental Rate"
               variant="outlined"
               fullWidth
-              className="mb-4"
-              type='number'
-              value={rentalRate}
-              onChange={(e) => setRentalRate(parseInt(e.target.value))}
+              type="number"
+              name="rental_rate"
+              value={formData.rental_rate}
+              onChange={(e) => setFormData({ ...formData, rental_rate: parseInt(e.target.value) })}
             />
-            <TextField
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="availability"
+                  checked={formData.availability}
+                  onChange={handleChange}
+                />
+              }
               label="Availability"
-              variant="outlined"
-              fullWidth
-              className="mb-4"
-              value={availability.toString()}
-              onChange={(e) => setAvailability(e.target.value === 'true')}
+              className="sm:col-span-2"
             />
-            <TextField
-              label="Vehicle Image"
-              variant="outlined"
-              fullWidth
-              className="mb-4"
-              value={vehicleImage}
-              onChange={(e) => setVehicleImage(e.target.value)}
-            />
-            <Button type="submit" variant="contained" color="primary">Add Vehicle</Button>
+            <div className="sm:col-span-2">
+              <input
+                type="file"
+                accept="image/*"
+                name="vehicle_image"
+                onChange={handleChange}
+                style={{ marginTop: '16px', marginBottom: '8px' }}
+              />
+            </div>
+            <Button type="submit" variant="contained" color="primary" className="sm:col-span-2">Add Vehicle</Button>
           </form>
         </CardContent>
       </Card>

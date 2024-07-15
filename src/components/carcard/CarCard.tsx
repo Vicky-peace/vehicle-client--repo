@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Image from '../../assets/all-images/cars-img/bmw-offer.png'
 import './carcard.scss';
 
 interface VehicleSpec {
@@ -26,6 +25,7 @@ interface CarCardProps {
 
 const CarCard: React.FC<CarCardProps> = ({
   vehicle_id,
+  vehicle_image,
   rental_rate,
   availability,
   vehicleSpec
@@ -44,7 +44,7 @@ const CarCard: React.FC<CarCardProps> = ({
 
   return (
     <div className="car-card bg-white shadow-lg rounded-lg p-4">
-      <img src={Image} alt={manufacturer} className="car-image w-full h-48 object-cover rounded" />
+      <img src={vehicle_image} alt={manufacturer} className="car-image w-full h-48 object-cover rounded" />
       <h3 className="text-xl font-bold mt-2">{manufacturer} {model} ({year})</h3>
       <p className="price text-lg text-gray-700">{rental_rate} / Day</p>
       <p className="availability text-lg text-green-600">{availability ? 'Available' : 'Not Available'}</p>
