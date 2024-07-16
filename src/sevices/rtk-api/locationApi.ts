@@ -22,6 +22,14 @@ export const locationApi = createApi({
         }),
         invalidatesTags: [{type: 'Location', id: "LIST"}],
       }),
+      updateLocation: builder.mutation<Location,{id: number, updatedLocation: Partial<Location>}>({
+        query: ({id,updatedLocation}) => ({
+          url: `/locations/${id}`,
+          method: 'PUT',
+          body: updatedLocation,
+        }),
+        invalidatesTags: [{type: 'Location', id: "LIST"}],
+      }),
       deleteLocation: builder.mutation<void, number>({
         query: (id) => ({
           url: `/locations/${id}`,

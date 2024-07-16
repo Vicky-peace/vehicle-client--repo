@@ -10,6 +10,7 @@ import {toast} from 'react-toastify';
 const ManageUsers: React.FC = () => {
   const {data: users = [], refetch} = usersApi.useGetUsersQuery();
   const [deleteUser] = usersApi.useDeleteUserMutation();
+  
  
 
 const handleDeleteUser = async (user_id: number) => {
@@ -32,11 +33,11 @@ const handleDeleteUser = async (user_id: number) => {
             {users.map((user: Users) => (
               <Card key={user.user_id} className="flex flex-col">
                 <CardContent>
-                  <Typography variant="h6">{user.full_name}</Typography>
-                  <Typography variant="body2">{user.email}</Typography>
-                  <Typography variant="body2">{user.contact_phone}</Typography>
-                  <Typography variant="body2">{user.address}</Typography>
-                  <Typography variant="body2">{user.role}</Typography>
+                <Typography variant="h6" className="text-blue-800">{user.full_name}</Typography>
+                  <Typography variant="body2" className="text-gray-700">{user.email}</Typography>
+                  <Typography variant="body2" className="text-gray-700">{user.contact_phone}</Typography>
+                  <Typography variant="body2" className="text-gray-700">{user.address}</Typography>
+                  <Typography variant="body2" className="text-gray-700">{user.role}</Typography>
                   <div className="flex justify-between mt-4">
                     <Button variant='contained' color='primary' onClick={() => handleDeleteUser(user.user_id)}>Delete</Button>
                   </div>
