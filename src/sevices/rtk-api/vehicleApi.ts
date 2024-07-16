@@ -23,6 +23,14 @@ export const vehiclesApi = createApi({
         }),
         invalidatesTags: [{type: 'Vehicle', id: "LIST"}],
       }),
+      updateVehicle: builder.mutation<CarCardProps,{id: number, updatedVehicle: CarCardProps}>({
+        query: ({id,updatedVehicle}) => ({
+          url: `/vehicles/${id}`,
+          method: 'PUT',
+          body: updatedVehicle,
+        }),
+        invalidatesTags: [{type: 'Vehicle', id: "LIST"}],
+      }),
       deleteVehicle: builder.mutation<void, number>({
         query: (vehicleId) => ({
           url: `/vehicles/${vehicleId}`,
