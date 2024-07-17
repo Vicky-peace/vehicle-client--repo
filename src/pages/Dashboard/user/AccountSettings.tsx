@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
-import { usersApi} from '../../../sevices/rtk-api/userApi';
+import { usersApi } from '../../../sevices/rtk-api/userApi';
 import { Users } from '../../../types/types';
 import { toast } from 'react-toastify';
-
+import axios from 'axios';
+import { cloudinaryConfig } from '../../../cloudinary/CloudinaryConfig';
 
 const AccountSettings: React.FC = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -14,9 +15,8 @@ const AccountSettings: React.FC = () => {
     const [updateUser] = usersApi.useUpdateUserMutation();
 
     const [email, setEmail] = useState(user?.email || '');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [profilePicPreview, setProfilePicPreview] = useState<string | null>(null);
+    const [profilePic, setProfilePic] = useState<File | null>(null);
+    const [profilePicPreview, setProfilePicPreview] = useState<string | null>(user?.profile_image || null);
     const [fullName, setFullName] = useState(user?.full_name || '');
     const [contactPhone, setContactPhone] = useState(user?.contact_phone || '');
     const [address, setAddress] = useState(user?.address || '');
@@ -27,14 +27,28 @@ const AccountSettings: React.FC = () => {
             setFullName(userData.full_name);
             setContactPhone(userData.contact_phone);
             setAddress(userData.address);
+            setProfilePicPreview(userData.profile_image);
         }
     }, [userData]);
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            return;
+
+        let profileImageUrl = user?.profile_image || '';
+
+        if (profilePic) {
+            const formData = new FormData();
+            formData.append('file', profilePic);
+            formData.append('upload_preset', cloudinaryConfig.uploadPreset); 
+
+            try {
+                const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudname}/image/upload`, formData); 
+                profileImageUrl = response.data.secure_url;
+            } catch (error) {
+                console.error('Error uploading image to Cloudinary:', error);
+                toast.error('Failed to upload profile image');
+                return;
+            }
         }
 
         const updatedUser: Partial<Users> = {
@@ -42,7 +56,7 @@ const AccountSettings: React.FC = () => {
             full_name: fullName,
             contact_phone: contactPhone,
             address,
-            ...(password && { password }),
+            profile_image: profileImageUrl,
         };
 
         try {
@@ -54,7 +68,6 @@ const AccountSettings: React.FC = () => {
             }
         } catch (error) {
             console.error('Failed to update user:', error);
-        
             toast.error('Failed to update user.');
         }
     };
@@ -62,6 +75,7 @@ const AccountSettings: React.FC = () => {
     const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
         if (file) {
+            setProfilePic(file);
             setProfilePicPreview(URL.createObjectURL(file));
         }
     };
@@ -122,30 +136,6 @@ const AccountSettings: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                        New Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                        Confirm Password
-                    </label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div>
                     <label htmlFor="profilePic" className="block text-sm font-medium text-gray-700">
                         Profile Picture
                     </label>
@@ -157,11 +147,14 @@ const AccountSettings: React.FC = () => {
                         className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                     {profilePicPreview && (
-                        <img
-                            src={profilePicPreview}
-                            alt="Profile Preview"
-                            className="mt-2 w-24 h-24 rounded-full object-cover"
-                        />
+                        <div className="mt-2">
+                            <img
+                                src={profilePicPreview}
+                                alt="Profile Preview"
+                                className="w-24 h-24 rounded-full object-cover"
+                                style={{ borderRadius: '50%' }}
+                            />
+                        </div>
                     )}
                 </div>
                 <div className="text-right">

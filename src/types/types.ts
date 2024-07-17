@@ -45,6 +45,10 @@ export type Booking = {
   vehicle: CarCardProps;
   location: Location; 
 };
+export interface AuthUser{
+  auth_id: number;
+  password: string;
+}
 export interface Users {
   user_id: number;
   full_name: string;
@@ -53,6 +57,7 @@ export interface Users {
   address: string;
   role: string;
   profile_image: string;
+  auth: AuthUser;
 }
 
 export interface Fleet{

@@ -3,7 +3,7 @@ import {Location} from '../../types/types';
 
 export const locationApi = createApi({
     reducerPath: 'locationApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net/' }),
     tagTypes: ['Location'],
     endpoints: (builder) => ({
       getLocations: builder.query<Location[], void>({

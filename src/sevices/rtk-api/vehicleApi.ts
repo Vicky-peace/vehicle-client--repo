@@ -3,7 +3,7 @@ import { CarCardProps } from '../../types/types';
 
 export const vehiclesApi = createApi({
     reducerPath: 'vehiclesApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net/' }),
     "tagTypes": ["Vehicle"],
     endpoints: (builder) => ({
       getVehicles: builder.query<CarCardProps[], void>({

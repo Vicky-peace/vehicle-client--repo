@@ -32,7 +32,8 @@ import Reports from './pages/Dashboard/Admin/Reports.tsx';
 import ManageLocations from './pages/Dashboard/Admin/ManageLocations.tsx';
 import CustomerSupportTickets from './pages/Dashboard/Admin/CustomerSupport.tsx';
 import FleetManagement from './pages/Dashboard/Admin/FleetManagement.tsx';
-
+import SuccessPayment from './pages/Dashboard/user/PaymentFailed.tsx';
+import FailedPayment from './pages/Dashboard/user/PaymentFailed.tsx';
 
 
 
@@ -67,6 +68,8 @@ const router = createBrowserRouter([
     { path: 'booking-history', element: <BookingHistory /> },
     { path: 'current-bookings', element: <CurrentBookings /> },
     { path: 'account-settings', element: <AccountSettings /> },
+    {path: 'payment-successful', element: <SuccessPayment/>},
+    {path: 'payment-failed', element: <FailedPayment/>},
   ],
  },
  {

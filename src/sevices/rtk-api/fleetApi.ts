@@ -3,7 +3,7 @@ import { Fleet } from '../../types/types';
 
 export const fleetApi = createApi({
     reducerPath: 'fleetApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net/' }),
     "tagTypes": ["FleetManagement"],
     endpoints: (builder) => ({
       getFleets: builder.query<Fleet[], void>({

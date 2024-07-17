@@ -3,6 +3,7 @@ import CurrentBookings from './CurrentBookings';
 import AccountSettings from './AccountSettings';
 
 
+
 const DashboardOverview: React.FC = () => {
     return (
        
@@ -10,6 +11,7 @@ const DashboardOverview: React.FC = () => {
             <BookingHistory />
             <CurrentBookings />
             <AccountSettings />
+            
         </div>
         
     );

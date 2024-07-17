@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { vehiclesApi } from '../../../sevices/rtk-api/vehicleApi';
 import { CarCardProps } from '../../../types/types';
+import { cloudinaryConfig } from '../../../cloudinary/CloudinaryConfig';
 
 interface FormDataState {
   rental_rate: number;
@@ -59,10 +60,10 @@ const ManageVehicles: React.FC = () => {
       if (formData.vehicle_image) {
         const formDataImage = new FormData();
         formDataImage.append('file', formData.vehicle_image);
-        formDataImage.append('upload_preset', 'upload');
+        formDataImage.append('upload_preset', cloudinaryConfig.uploadPreset);
 
         const response = await axios.post(
-          'https://api.cloudinary.com/v1_1/dor27a2ut/image/upload',
+         `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudname}/image/upload`,
           formDataImage
         );
 

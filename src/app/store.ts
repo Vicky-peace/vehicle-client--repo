@@ -10,6 +10,7 @@ import { usersApi } from '../sevices/rtk-api/userApi';
 import { bookingsApi } from "../sevices/rtk-api/bookingApi";
 import { locationApi } from "../sevices/rtk-api/locationApi";
 import { fleetApi } from "../sevices/rtk-api/fleetApi";
+import { paymentsApi } from "../sevices/rtk-api/paymentsApi";
 
 const persistConfig = {
     key: 'root',
@@ -24,6 +25,7 @@ const rootReducer: Reducer = combineReducers({
     [bookingsApi.reducerPath]: bookingsApi.reducer,
     [locationApi.reducerPath]: locationApi.reducer,
     [fleetApi.reducerPath]: fleetApi.reducer,
+    [paymentsApi.reducerPath]: paymentsApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -41,7 +43,8 @@ export const store = configureStore({
             usersApi.middleware,
             bookingsApi.middleware,
             locationApi.middleware,
-            fleetApi.middleware
+            fleetApi.middleware,
+            paymentsApi.middleware,
         ),
 });
 
