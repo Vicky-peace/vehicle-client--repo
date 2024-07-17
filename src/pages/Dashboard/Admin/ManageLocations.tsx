@@ -3,6 +3,7 @@ import { Typography, Card, CardContent, TextField, Button, Dialog, DialogActions
 import { locationApi } from '../../../sevices/rtk-api/locationApi';
 import { Location } from '../../../types/types';
 import { toast } from 'react-toastify';
+import { ClipLoader } from 'react-spinners';
 
 interface FormDataState {
   name: string;
@@ -11,10 +12,10 @@ interface FormDataState {
 }
 
 const ManageLocations: React.FC = () => {
-  const { data: locations = [], refetch } = locationApi.useGetLocationsQuery();
-  const [addLocation] = locationApi.useAddLocationMutation();
-  const [deleteLocation] = locationApi.useDeleteLocationMutation();
-  const [updateLocation] = locationApi.useUpdateLocationMutation();
+  const { data: locations = [], refetch, isLoading: isFetching } = locationApi.useGetLocationsQuery();
+  const [addLocation,{ isLoading: isAdding }] = locationApi.useAddLocationMutation();
+  const [deleteLocation, { isLoading: isDeleting }] = locationApi.useDeleteLocationMutation();
+  const [updateLocation,{ isLoading: isUpdating }] = locationApi.useUpdateLocationMutation();
 
   const [formData, setFormData] = useState<FormDataState>({
     name: '',
@@ -113,29 +114,57 @@ const handleCloseModal = () => {
               value={formData.contact_phone}
               onChange={handleChange}
             />
-            <Button type="submit" variant="contained" color="primary" className="sm:col-span-2">Add Location</Button>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary" 
+              className="sm:col-span-2"
+              disabled={isAdding || isUpdating}
+            >
+              {isAdding || isUpdating ? <ClipLoader size={20} color="#fff" /> : (editingLocation ? 'Update Location' : 'Add Location')}
+            </Button>
           </form>
           </CardContent>
       </Card>
      
       <Card>
-        <CardContent>
+      <CardContent>
           <Typography variant="h6">Location List</Typography>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {locations.map((location: Location) => (
-              <Card key={location.location_id} className="flex flex-col">
-                <CardContent>
-                  <Typography variant="h6" className='text-blue-800'>{location.name}</Typography>
-                  <Typography variant="body2" className='text-gray-700'>{location.address}</Typography>
-                  <Typography variant="body2" className='text-gray-700'>{location.contact_phone}</Typography>
-                  <div className="flex justify-between mt-4">
-                    <Button variant='contained' color='primary'onClick={() => handleEditLocation(location)}>Edit</Button>
-                    <Button variant='contained' color='secondary' onClick={() => handleDeleteLocation(location.location_id)}>Delete</Button>
-                  </div>
-                </CardContent>
+          {isFetching ? (
+            <div className="flex justify-center items-center h-full">
+              <ClipLoader size={50} color="#123abc" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {locations.map((location: Location) => (
+                <Card key={location.location_id} className="flex flex-col">
+                  <CardContent>
+                    <Typography variant="h6" className='text-blue-800'>{location.name}</Typography>
+                    <Typography variant="body2" className='text-gray-700'>{location.address}</Typography>
+                    <Typography variant="body2" className='text-gray-700'>{location.contact_phone}</Typography>
+                    <div className="flex justify-between mt-4">
+                      <Button 
+                        variant='contained' 
+                        color='primary' 
+                        onClick={() => handleEditLocation(location)}
+                        disabled={isDeleting}
+                      >
+                        Edit
+                      </Button>
+                      <Button 
+                        variant='contained' 
+                        color='secondary' 
+                        onClick={() => handleDeleteLocation(location.location_id)}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? <ClipLoader size={20} color="#fff" /> : 'Delete'}
+                      </Button>
+                    </div>
+                  </CardContent>
               </Card>
             ))}
           </div>
+        )}
         </CardContent>
       </Card>
 
@@ -172,9 +201,14 @@ const handleCloseModal = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseModal} color="primary">Cancel</Button>
-            <Button type="submit" variant="contained" color="primary">
-              {editingLocation ? 'Update Location' : 'Add Location'}
+          <Button onClick={handleCloseModal} color="primary">Cancel</Button>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary"
+              disabled={isAdding || isUpdating}
+            >
+              {isAdding || isUpdating ? <ClipLoader size={20} color="#fff" /> : (editingLocation ? 'Update Location' : 'Add Location')}
             </Button>
           </DialogActions>
         </form>

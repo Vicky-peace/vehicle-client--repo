@@ -54,3 +54,13 @@ export interface Users {
   role: string;
   profile_image: string;
 }
+
+export interface Fleet{
+ fleet_id: number;  
+ vehicle_id: number;
+ acquisition_date: string;
+ depreciation_rate: number;
+ current_value: number;
+ maintenance_cost: number;
+ status: 'Active' | 'Inactive';
+}
