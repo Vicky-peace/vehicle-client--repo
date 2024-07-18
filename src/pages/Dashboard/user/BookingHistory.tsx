@@ -3,6 +3,7 @@ import { Booking } from "../../../types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { ClipLoader } from "react-spinners";
+import  {paymentsApi} from "../../../sevices/rtk-api/paymentsApi";
 
 const BookingHistory = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -10,7 +11,8 @@ const BookingHistory = () => {
 
  
  const { data: bookings, error, isLoading } = bookingsApi.useGetBookingQuery(userId) as { data: Booking[] | undefined, error: any, isLoading: boolean };
-
+ const {data: payments} = paymentsApi.useGetPaymentQuery(userId) ;
+ console.log(payments)
    if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
   if (error) return <div>Error: Failed to fetch booking history</div>;
 
@@ -40,7 +42,7 @@ const BookingHistory = () => {
               Total Amount
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Status
+              Booking Status
             </th>
           </tr>
         </thead>
