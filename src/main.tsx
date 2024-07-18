@@ -32,8 +32,8 @@ import Reports from './pages/Dashboard/Admin/Reports.tsx';
 import ManageLocations from './pages/Dashboard/Admin/ManageLocations.tsx';
 import CustomerSupportTickets from './pages/Dashboard/Admin/CustomerSupport.tsx';
 import FleetManagement from './pages/Dashboard/Admin/FleetManagement.tsx';
-import PaymentSuccess from './pages/Dashboard/user/PaymentSuccess.tsx';
-import PaymentFailed from './pages/Dashboard/user/PaymentFailed.tsx';
+import PaymentSuccess from './PaymentSuccess.tsx';
+import PaymentFailed from './PaymentFailed.tsx';
 
 
 
@@ -61,11 +61,11 @@ const router = createBrowserRouter([
   errorElement: <NotFound/>,
  },
  {
-  path: 'payment-successful',
+  path: '/payment-successful',
    element: <PaymentSuccess/>
   },
  {
-  path: 'payment-failed', 
+  path: '/payment-failed', 
   element: <PaymentFailed/>
 },
  {
