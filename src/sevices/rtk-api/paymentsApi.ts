@@ -14,7 +14,7 @@ export interface TPayment {
 
   export const paymentsApi = createApi({
     reducerPath: 'paymentsApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'https://carentalsys.azurewebsites.net/'}),
+    baseQuery: fetchBaseQuery({baseUrl: 'https://carentalsys.azurewebsites.net'}),
     tagTypes: ['Payment'],
     endpoints: (builder) => ({
         getPayments: builder.query<TPayment[], void>({

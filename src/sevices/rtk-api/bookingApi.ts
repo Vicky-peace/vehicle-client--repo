@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Booking } from "../../types/types";
 export const bookingsApi = createApi({
     reducerPath: "bookingsApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://white-sky-095ea8f03.5.azurestaticapps.net" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://carentalsys.azurewebsites.net" }),
     tagTypes: ["Booking"],
     endpoints: (builder) => ({
         getBookings: builder.query<Booking[], void>({
