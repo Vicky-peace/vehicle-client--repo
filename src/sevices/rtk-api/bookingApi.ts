@@ -28,5 +28,12 @@ export const bookingsApi = createApi({
         }),
         invalidatesTags: ["Booking"],
         }),
+        updateBookingStatus: builder.mutation<Booking, { id: number, status: string }>({
+        query: ({ id, status }) => ({
+            url: `bookings/${id}/status`,
+            method: "PUT",
+            body: { status },
+        }),
+        })
     }),
     });

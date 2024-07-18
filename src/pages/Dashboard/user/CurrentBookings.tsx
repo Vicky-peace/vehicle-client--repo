@@ -115,7 +115,7 @@ const CurrentBookings: React.FC = () => {
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Status
+                Payment Status
               </th>
               <th
                 scope="col"
@@ -156,12 +156,12 @@ const CurrentBookings: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      booking.booking_status === "Completed"
+                      booking.payments.payment_status === "Completed"
                         ? "bg-green-100 text-green-800"
                         : "bg-yellow-100 text-yellow-800"
                     }`}
                   >
-                    {booking.booking_status}
+                    {booking.payments.payment_status}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

@@ -28,7 +28,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
   const { data: locations} = locationApi.useGetLocationsQuery();
   const [addBooking, { isLoading: isLoadingBooking }] = bookingsApi.useAddBookingMutation();
   const [createPayment] = paymentsApi.useAddPaymentMutation();
+  const [updateStatus] = bookingsApi.useUpdateBookingStatusMutation();
   const [isPaymentLoading, setIsPaymentLoading] = useState<number | null>(null);
+  
 
   const handleBooking = async () => {
     if (!startDate || !endDate || !locationId || !user || !vehicle) {
@@ -85,12 +87,17 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
           if (error) {
             console.error('Error redirecting to checkout:', error);
             toast.error('Error redirecting to checkout');
+          }else{
+            //update booking status
+            await updateStatus({id: bookingId, status: 'Completed'}).unwrap(); 
           }
         }
       }
     } catch (error) {
       console.error('Error initiating payment:', error);
       toast.error('Error initiating payment');
+
+      await updateStatus({id: bookingId, status: 'Cancelled'}).unwrap();
     } finally {
       setIsPaymentLoading(null);
     }
