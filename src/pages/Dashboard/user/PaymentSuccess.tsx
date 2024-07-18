@@ -1,10 +1,9 @@
-import React from 'react';
 import { ArrowLeftToLine } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const SuccessPayment: React.FC = () => {
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50">
+const PaymentSuccess = () => {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50">
             <div className="flex items-center mb-4">
                 <ArrowLeftToLine className="h-6 w-6 text-blue-500" />
                 <Link to="/dashboard/current-bookings" className="text-blue-500 ml-2 hover:underline">Back to Dashboard</Link>
@@ -29,8 +28,7 @@ const SuccessPayment: React.FC = () => {
                 <p className="text-gray-600 mt-2">Thank you for your payment!</p>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default SuccessPayment;
-
+export default PaymentSuccess
