@@ -30,7 +30,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
   const [createPayment] = paymentsApi.useAddPaymentMutation();
   const [updateStatus] = bookingsApi.useUpdateBookingStatusMutation();
   const [isPaymentLoading, setIsPaymentLoading] = useState<number | null>(null);
-  
 
   const handleBooking = async () => {
     if (!startDate || !endDate || !locationId || !user || !vehicle) {
