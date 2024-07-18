@@ -60,8 +60,14 @@ const router = createBrowserRouter([
   element: <AuthPage/>,
   errorElement: <NotFound/>,
  },
- {path: 'payment-successful', element: <PaymentSuccess/>},
- {path: 'payment-failed', element: <PaymentFailed/>},
+ {
+  path: 'payment-successful',
+   element: <PaymentSuccess/>
+  },
+ {
+  path: 'payment-failed', 
+  element: <PaymentFailed/>
+},
  {
   path: '/dashboard',
   element: <UserDashboard/>,
