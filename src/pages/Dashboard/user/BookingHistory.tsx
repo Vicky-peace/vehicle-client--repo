@@ -3,7 +3,7 @@ import { Booking } from "../../../types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { ClipLoader } from "react-spinners";
-import  {paymentsApi} from "../../../sevices/rtk-api/paymentsApi";
+
 
 const BookingHistory = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -11,8 +11,7 @@ const BookingHistory = () => {
 
  
  const { data: bookings, error, isLoading } = bookingsApi.useGetBookingQuery(userId) as { data: Booking[] | undefined, error: any, isLoading: boolean };
- const {data: payments} = paymentsApi.useGetPaymentQuery(userId) ;
- console.log(payments)
+  console.log(bookings);
    if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
   if (error) return <div>Error: Failed to fetch booking history</div>;
 
@@ -44,6 +43,9 @@ const BookingHistory = () => {
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Booking Status
             </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Status
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -70,6 +72,11 @@ const BookingHistory = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${booking.booking_status === 'Completed' ? 'bg-green-100 text-green-800' : booking.booking_status === 'Cancelled' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
                   {booking.booking_status}
+                </span>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${booking.payments.payment_status === 'Completed' ? 'bg-green-100 text-green-800' : booking.payments.payment_status === 'Refunded' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                  {booking.payments.payment_status}
                 </span>
               </td>
             </tr>

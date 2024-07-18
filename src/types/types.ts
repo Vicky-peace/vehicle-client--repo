@@ -20,7 +20,15 @@ export interface CarCardProps {
 
 
 
-
+export interface Payments {
+  payment_id: number;
+  booking_id: number;
+  amount: number;
+  payment_date: string;
+  payment_method: string;
+  transaction_id: string;
+  payment_status: 'Completed' | 'Pending' | 'Refunded';
+}
 
 export type Location ={
   location_id: number;
@@ -44,6 +52,7 @@ export type Booking = {
   updated_at: string;
   vehicle: CarCardProps;
   location: Location; 
+  payments: Payments;
 };
 export interface AuthUser{
   auth_id: number;
