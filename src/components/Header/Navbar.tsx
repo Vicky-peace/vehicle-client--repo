@@ -153,7 +153,7 @@ const Navbar = () => {
                     {auth.user ? (
                         <>
                             <img
-                                src={Image1}
+                                src={user.profile_image||Image1}
                                 alt="Profile"
                                 className="w-10 h-10 rounded-full object-cover self-center"
                             />

@@ -1,3 +1,4 @@
+
 export interface VehicleSpec {
   manufacturer: string;
   model: string;
