@@ -1,0 +1,43 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.navbar {
+    position: relative;
+    z-index: 10;
+}
+
+.fixed {
+    top: 0;
+    left: 0;
+}
+
+.menu-icon {
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.md\\:hidden {
+    display: none;
+}
+
+.md\\:flex {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .md\\:hidden {
+        display: block;
+    }
+    .md\\:flex {
+        display: none;
+    }
+}
