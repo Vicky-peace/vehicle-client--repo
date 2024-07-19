@@ -1,12 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { CarCardProps } from '../../types/types';
-import { localDomain } from '../../utils';
-// import { prodDomain } from '../../utils';
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
 
 
 export const vehiclesApi = createApi({
     reducerPath: 'vehiclesApi',
-    baseQuery: fetchBaseQuery({ baseUrl: localDomain }),
+    baseQuery: fetchBaseQuery({ baseUrl: prodDomain }),
     "tagTypes": ["Vehicle"],
     endpoints: (builder) => ({
       getVehicles: builder.query<CarCardProps[], void>({
