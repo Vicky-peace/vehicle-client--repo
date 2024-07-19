@@ -1,31 +1,26 @@
-import { useState, useEffect } from 'react';
-import { AlignJustify } from 'lucide-react';
+import { useState } from 'react';
+import { AlignJustify, LogOut, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../sevices/slices/authSlice';
 import { RootState } from '../../app/store';
 import Image1 from '../../assets/all-images/ava-1.jpg';
-import { User, LogOut } from 'lucide-react'; 
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const auth = useSelector((state: RootState) => state.auth);
     const user = useSelector((state: RootState) => state.auth.user);
 
     const toggleMenu = () => setIsOpen(!isOpen);
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
     const handleLogout = () => {
         dispatch(logout());
         navigate('/');
     };
-
-    useEffect(() => {
-        if (!auth.user) {
-            navigate('/');
-        }
-    }, [auth.user, navigate]);
 
     return (
         <nav className="navbar bg-[#0A0A3E] p-4 md:px-8 text-white">
@@ -63,20 +58,39 @@ const Navbar = () => {
                             </Link>
                         </li>
                     </ul>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-4 items-center relative">
                         {auth.user ? (
                             <>
-                                <img
-                                    src={user?.profile_image || Image1}
-                                    alt="Profile"
-                                    className="w-10 h-10 rounded-full object-cover"
-                                />
-                                <button
-                                    onClick={handleLogout}
-                                    className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full hover:bg-orange-500"
-                                >
-                                    <span className="text-lg"><LogOut size={24} /></span>
-                                </button>
+                                <div onClick={toggleDropdown} className="cursor-pointer">
+                                    <img
+                                        src={user?.profile_image || Image1}
+                                        alt="Profile"
+                                        className="w-10 h-10 rounded-full object-cover"
+                                    />
+                                </div>
+                                {dropdownOpen && (
+                                    <div className="absolute right-0 top-full mt-2 w-48 bg-white text-black rounded-lg shadow-lg">
+                                        <div className="flex items-center p-4">
+                                            <img
+                                                src={user?.profile_image || Image1}
+                                                alt="Profile"
+                                                className="w-10 h-10 rounded-full object-cover"
+                                            />
+                                            <div className="ml-4">
+                                                <p className="text-lg font-semibold">{user.name}</p>
+                                                <p className="text-sm text-gray-500">{user.role}</p>
+                                            </div>
+                                        </div>
+                                        <hr className="my-2" />
+                                        <button
+                                            onClick={handleLogout}
+                                            className="flex items-center w-full px-4 py-2 hover:bg-gray-200"
+                                        >
+                                            <LogOut size={24} className="mr-2" />
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
                             </>
                         ) : (
                             <>
