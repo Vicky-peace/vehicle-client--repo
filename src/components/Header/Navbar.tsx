@@ -12,6 +12,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const auth = useSelector((state: RootState) => state.auth);
+    const user = useSelector((state: RootState) => state.auth.user);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -41,31 +42,24 @@ const Navbar = () => {
                     <ul className="flex gap-16 list-none text-lg">
                         <li>
                             <Link to="/" className="hover:text-orange-500">
-                                <span className="text-2xl">
-                                    Home
-                                </span>
+                                <span className="text-2xl">Home</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/cars" className="hover:text-orange-500">
-                            <span className="text-2xl">
-                            Cars
-                            </span>
-                              
+                                <span className="text-2xl">Cars</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link to="/dashboard" className="hover:text-orange-500">
-                            <span className="text-2xl">
-                                Dashboard
-                              </span>
-                            </Link>
-                        </li>
+                        {auth.user && (
+                            <li>
+                                <Link to={auth.user.role === 'admin' ? '/admin' : '/dashboard'} className="hover:text-orange-500">
+                                    <span className="text-2xl">Dashboard</span>
+                                </Link>
+                            </li>
+                        )}
                         <li>
                             <Link to="/contact" className="hover:text-orange-500">
-                            <span className="text-2xl">
-                                Contact
-                            </span>
+                                <span className="text-2xl">Contact</span>
                             </Link>
                         </li>
                     </ul>
@@ -73,7 +67,7 @@ const Navbar = () => {
                         {auth.user ? (
                             <>
                                 <img
-                                    src={Image1}
+                                    src={user?.profile_image || Image1}
                                     alt="Profile"
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
@@ -81,9 +75,7 @@ const Navbar = () => {
                                     onClick={handleLogout}
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                        <LogOut size={24} /> 
-                                    </span>
+                                    <span className="text-lg"><LogOut size={24} /></span>
                                 </button>
                             </>
                         ) : (
@@ -92,17 +84,13 @@ const Navbar = () => {
                                     to="/auth"
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                        Login
-                                    </span>
+                                    <span className="text-lg">Login</span>
                                 </Link>
                                 <Link
                                     to="/register"
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                      sign up
-                                    </span>
+                                    <span className="text-lg">Sign up</span>
                                 </Link>
                             </>
                         )}
@@ -115,30 +103,24 @@ const Navbar = () => {
                     <ul className="flex flex-col gap-4 w-full">
                         <li>
                             <Link to="/" className="w-full hover:text-orange-500">
-                                <span className="text-2xl">
-                                    <User size={24} /> 
-                                </span>
+                                <span className="text-2xl"><User size={24} /></span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/about" className="w-full hover:text-orange-500">
-                                About
-                            </Link>
+                            <Link to="/about" className="w-full hover:text-orange-500">About</Link>
                         </li>
                         <li>
-                            <Link to="/cars" className="w-full hover:text-orange-500">
-                                Cars
-                            </Link>
+                            <Link to="/cars" className="w-full hover:text-orange-500">Cars</Link>
                         </li>
+                        {auth.user && (
+                            <li>
+                                <Link to={auth.user.role === 'admin' ? '/admin' : '/dashboard'} className="w-full hover:text-orange-500">
+                                    <span className="text-2xl">Dashboard</span>
+                                </Link>
+                            </li>
+                        )}
                         <li>
-                            <Link to="/dashboard" className="w-full hover:text-orange-500">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/contact" className="w-full hover:text-orange-500">
-                                Contact
-                            </Link>
+                            <Link to="/contact" className="w-full hover:text-orange-500">Contact</Link>
                         </li>
                     </ul>
                     <div className="flex flex-col gap-4 w-full mt-4">
@@ -153,9 +135,7 @@ const Navbar = () => {
                                     onClick={handleLogout}
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full w-full text-center hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                        <LogOut size={24} /> 
-                                    </span>
+                                    <span className="text-lg"><LogOut size={24} /></span>
                                 </button>
                             </>
                         ) : (
@@ -164,17 +144,13 @@ const Navbar = () => {
                                     to="/auth"
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full w-full text-center hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                       Login
-                                    </span>
+                                    <span className="text-lg">Login</span>
                                 </Link>
                                 <Link
                                     to="/register"
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full w-full text-center hover:bg-orange-500"
                                 >
-                                    <span className="text-lg">
-                                        Sign up
-                                    </span>
+                                    <span className="text-lg">Sign up</span>
                                 </Link>
                             </>
                         )}

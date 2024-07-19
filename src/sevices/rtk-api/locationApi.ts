@@ -1,9 +1,11 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {Location} from '../../types/types';
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
 
 export const locationApi = createApi({
     reducerPath: 'locationApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net' }),
+    baseQuery: fetchBaseQuery({ baseUrl: prodDomain }),
     tagTypes: ['Location'],
     endpoints: (builder) => ({
       getLocations: builder.query<Location[], void>({

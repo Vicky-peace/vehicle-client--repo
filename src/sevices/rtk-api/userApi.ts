@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Users } from '../../types/types';
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
+
 export const usersApi = createApi({
     reducerPath: 'usersApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net' }),
+    baseQuery: fetchBaseQuery({ baseUrl: prodDomain }),
     tagTypes: ['Users'], 
     endpoints: (builder) => ({
         getUsers: builder.query<Users[], void>({

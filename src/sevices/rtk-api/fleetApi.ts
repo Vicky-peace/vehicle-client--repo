@@ -1,9 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { Fleet } from '../../types/types';
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
+
 
 export const fleetApi = createApi({
     reducerPath: 'fleetApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://carentalsys.azurewebsites.net' }),
+    baseQuery: fetchBaseQuery({ baseUrl: prodDomain }),
     "tagTypes": ["FleetManagement"],
     endpoints: (builder) => ({
       getFleets: builder.query<Fleet[], void>({

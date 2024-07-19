@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
 
 
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({baseUrl: 'https://carentalsys.azurewebsites.net'}),
+    baseQuery: fetchBaseQuery({baseUrl: prodDomain}),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({

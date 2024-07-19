@@ -1,4 +1,5 @@
 import React from 'react'
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute.tsx';
 import ReactDOM from 'react-dom/client'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -70,7 +71,11 @@ const router = createBrowserRouter([
 },
  {
   path: '/dashboard',
-  element: <UserDashboard/>,
+  element:( 
+    <ProtectedRoute>
+       <UserDashboard/>
+  </ProtectedRoute>
+),
   errorElement: <NotFound/>,
   children: [
     { path: '', element: <DashboardOverview /> },
@@ -102,7 +107,11 @@ const router = createBrowserRouter([
 },
 {
   path: '/admin',
-  element: <AdminLayout />,
+  element: (
+    <ProtectedRoute requiredRole="admin">
+        <AdminLayout />
+      </ProtectedRoute>
+  ),
   errorElement: <NotFound />,
   children: [
     { path: '', element: <AdminDashboard /> },

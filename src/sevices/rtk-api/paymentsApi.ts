@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
 
 export interface TPayment {
     booking_id: number;
@@ -14,7 +16,7 @@ export interface TPayment {
 
   export const paymentsApi = createApi({
     reducerPath: 'paymentsApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'https://carentalsys.azurewebsites.net'}),
+    baseQuery: fetchBaseQuery({baseUrl: prodDomain}),
     tagTypes: ['Payment'],
     endpoints: (builder) => ({
         getPayments: builder.query<TPayment[], void>({
