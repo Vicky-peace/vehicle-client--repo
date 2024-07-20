@@ -17,7 +17,7 @@ const handleDeleteUser = async (user_id: number) => {
   try {
     await deleteUser(user_id).unwrap();
     refetch();
-    toast.success('User deleted successfully');
+    toast.success('User disabled');
   } catch (error: any) {
     console.error("Failed to delete user:", error);
     toast.error('Failed to delete user');
@@ -39,7 +39,7 @@ const handleDeleteUser = async (user_id: number) => {
                   <Typography variant="body2" className="text-gray-700">{user.address}</Typography>
                   <Typography variant="body2" className="text-gray-700">{user.role}</Typography>
                   <div className="flex justify-between mt-4">
-                    <Button variant='contained' color='primary' onClick={() => handleDeleteUser(user.user_id)}>Delete</Button>
+                    <Button variant='contained' color='primary' onClick={() => handleDeleteUser(user.user_id)}>Disable</Button>
                   </div>
                 </CardContent>
               </Card>

@@ -79,3 +79,11 @@ export interface Fleet{
  maintenance_cost: number;
  status: 'Active' | 'Inactive';
 }
+
+export interface CustomerTickets{
+  ticket_id: number,
+  user_id: number,
+  subject: string,
+  description: string,
+  status: string
+}
