@@ -24,7 +24,7 @@ const FleetManagement: React.FC = () => {
   const { data: vehicles = [] } = vehiclesApi.useGetVehiclesQuery();
   const [addFleet, { isLoading: isAdding }] = fleetApi.useAddFleetMutation();
   const [updateFleet, { isLoading: isUpdating }] = fleetApi.useUpdateFleetMutation();
-
+  console.log(fleet)
   const [formData, setFormData] = useState<FormDataState>({
     vehicle_id: 0,
     acquisition_date: '',
@@ -44,7 +44,11 @@ const FleetManagement: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const numericFields = ['depreciation_rate', 'current_value', 'maintenance_cost'];
+    setFormData({
+      ...formData,
+      [name]: numericFields.includes(name) ? parseFloat(value) : value,
+    });
   }
 
   const handleSelectChange = (e: SelectChangeEvent<number | 'Active' | 'Inactive'>) => {
@@ -210,9 +214,9 @@ const FleetManagement: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <DialogContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormControl variant="outlined" fullWidth>
-              <InputLabel id="vehicle-id-dialog-label">Vehicle</InputLabel>
+              <InputLabel id="vehicle-id-label">Vehicle</InputLabel>
               <Select
-                labelId="vehicle-id-dialog-label"
+                labelId="vehicle-id-label"
                 label="Vehicle"
                 name="vehicle_id"
                 value={formData.vehicle_id}
@@ -262,9 +266,9 @@ const FleetManagement: React.FC = () => {
               onChange={handleInputChange}
             />
             <FormControl variant="outlined" fullWidth>
-              <InputLabel id="status-dialog-label">Status</InputLabel>
+              <InputLabel id="status-label">Status</InputLabel>
               <Select
-                labelId="status-dialog-label"
+                labelId="status-label"
                 label="Status"
                 name="status"
                 value={formData.status}
@@ -276,9 +280,7 @@ const FleetManagement: React.FC = () => {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseModal} color="secondary">
-              Cancel
-            </Button>
+            <Button onClick={handleCloseModal} color="secondary">Cancel</Button>
             <Button type="submit" color="primary" disabled={isAdding || isUpdating}>
               {isAdding || isUpdating ? <ClipLoader size={20} color="#fff" /> : (editingFleet ? 'Update Fleet' : 'Add Fleet')}
             </Button>
@@ -287,6 +289,6 @@ const FleetManagement: React.FC = () => {
       </Dialog>
     </div>
   );
-}
+};
 
 export default FleetManagement;
