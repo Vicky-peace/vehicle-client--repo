@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import { localDomain } from '../../utils';
 import { prodDomain } from '../../utils';
 
+
 export interface TPayment {
     booking_id: number;
     total_amount: number;

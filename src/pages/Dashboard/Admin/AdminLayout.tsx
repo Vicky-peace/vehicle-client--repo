@@ -4,7 +4,6 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/materia
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import PeopleIcon from '@mui/icons-material/People';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SupportIcon from '@mui/icons-material/Support';
 import CommuteIcon from '@mui/icons-material/Commute';
@@ -38,12 +37,6 @@ const AdminLayout: React.FC = () => {
               <PeopleIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary="Manage Users" className='text-white font-bold text-3xl'/>
-          </ListItem>
-          <ListItem button component={Link} to="/admin/reports" className="hover:bg-blue-700 text-bold">
-            <ListItemIcon>
-              <AssessmentIcon style={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText primary="Reports" className="text-white font-bold text-3xl" />
           </ListItem>
           <ListItem button component={Link} to="/admin/manage-locations" className="hover:bg-blue-700 text-bold">
             <ListItemIcon>

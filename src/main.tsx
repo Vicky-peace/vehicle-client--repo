@@ -29,7 +29,6 @@ import AdminLayout from './pages/Dashboard/Admin/AdminLayout.tsx';
 import AdminDashboard from './pages/Dashboard/Admin/AdminDashBoard.tsx';
 import ManageVehicles from './pages/Dashboard/Admin/ManageVehicles.tsx';
 import ManageUsers from './pages/Dashboard/Admin/ManageUsers.tsx';
-import Reports from './pages/Dashboard/Admin/Reports.tsx';
 import ManageLocations from './pages/Dashboard/Admin/ManageLocations.tsx';
 import CustomerSupportTickets from './pages/Dashboard/Admin/CustomerSupport.tsx';
 import FleetManagement from './pages/Dashboard/Admin/FleetManagement.tsx';
@@ -117,7 +116,6 @@ const router = createBrowserRouter([
     { path: '', element: <AdminDashboard /> },
     { path: 'manage-vehicles', element: <ManageVehicles /> },
     { path: 'manage-users', element: <ManageUsers /> },
-    { path: 'reports', element: <Reports /> },
     { path: 'manage-locations', element: <ManageLocations /> },
     { path: 'customer-support-tickets', element: <CustomerSupportTickets /> },
     { path: 'fleet-management', element: <FleetManagement /> },

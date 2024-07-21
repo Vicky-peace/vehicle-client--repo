@@ -1,12 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { CustomerTickets } from '../../types/types';
-import { localDomain } from '../../utils';
-// import { prodDomain } from '../../utils';
+// import { localDomain } from '../../utils';
+import { prodDomain } from '../../utils';
 
 
 export const ticketsApi = createApi({
     reducerPath: 'ticketsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: localDomain }),
+    baseQuery: fetchBaseQuery({ baseUrl: prodDomain }),
     "tagTypes": ["Tickets"],
     endpoints: (builder) => ({
       getTickets: builder.query<CustomerTickets[], void>({
