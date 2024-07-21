@@ -102,7 +102,7 @@ const Navbar = () => {
                                     <span className="text-lg">Login</span>
                                 </Link>
                                 <Link
-                                    to="/register"
+                                    to="/auth"
                                     className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full hover:bg-orange-500"
                                 >
                                     <span className="text-lg">Sign up</span>
@@ -174,7 +174,7 @@ const Navbar = () => {
                                 <span className="text-lg">Login</span>
                             </Link>
                             <Link
-                                to="/register"
+                                to="/auth"
                                 className="border border-orange-500 bg-transparent text-white px-4 py-2 rounded-full w-full text-center hover:bg-orange-500"
                                 onClick={toggleMenu}
                             >
