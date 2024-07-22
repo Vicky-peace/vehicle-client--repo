@@ -31,20 +31,3 @@
     padding: 16px;
   }
   
-  /* AdminLayout.css */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-}
-
-main {
-  margin-top: 4rem; 
-}
-
-@media (min-width: 768px) {
-  header {
-    display: none;
-  }
-}
