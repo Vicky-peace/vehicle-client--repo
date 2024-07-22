@@ -50,7 +50,7 @@ CarHub is a vehicle booking platform that allows users to browse, book, and mana
 
 ### Prerequisites
 
-- Node.js and npm (or Yarn) installed on your machine.
+- Node.js and pnpm (or Yarn) installed on your machine.
 - Access to environment variables for API keys and endpoints.
 
 ### Installation
@@ -58,5 +58,5 @@ CarHub is a vehicle booking platform that allows users to browse, book, and mana
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-repo/carhub-client.git
+   git clone https://github.com/Vicky-peace/vehicle-client--repo.git
    cd carhub-client
