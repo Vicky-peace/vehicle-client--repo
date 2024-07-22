@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import PeopleIcon from '@mui/icons-material/People';
@@ -8,15 +8,46 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SupportIcon from '@mui/icons-material/Support';
 import CommuteIcon from '@mui/icons-material/Commute';
 import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
 import './AdminLayout.css';
 
 const AdminLayout: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      setIsSidebarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="flex">
+    <div className="flex flex-col">
+      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
+        <IconButton 
+          onClick={toggleSidebar} 
+          className="md:hidden text-black"
+        >
+          <MenuIcon />
+        </IconButton>
+      </header>
       <Drawer
-        variant="permanent"
+        variant={isSidebarOpen ? 'persistent' : 'temporary'}
         anchor="left"
-        className="w-64"
+        open={isSidebarOpen}
+        onClose={toggleSidebar}
+        ref={sidebarRef}
         classes={{ paper: 'w-64 bg-gradient-to-r from-[#0A0A3E] via-[#1a1a66] to-[#2a2a99] text-white' }}
       >
         <List>
@@ -64,7 +95,7 @@ const AdminLayout: React.FC = () => {
           </ListItem>
         </List>
       </Drawer>
-      <main className="flex-1 p-4 bg-gray-100 min-h-screen">
+      <main className="flex-1 p-4 bg-gray-100 min-h-screen pt-16">
         <Outlet />
       </main>
     </div>
