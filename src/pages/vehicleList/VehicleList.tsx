@@ -4,49 +4,57 @@ import CarCard from '../../components/carcard/CarCard';
 import { vehiclesApi } from '../../sevices/rtk-api/vehicleApi';
 import { ClipLoader } from 'react-spinners';
 
-const VehicleList =  () => {
-  const {data: vehicles, error, isLoading} = vehiclesApi.useGetVehiclesQuery();
+const VehicleList = () => {
+  const { data: vehicles, error, isLoading } = vehiclesApi.useGetVehiclesQuery();
   console.log(vehicles);
 
-  const [category, setCategory] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [duration, setDuration] = useState<number>(0);
+  const [manufacturer, setManufacturer] = useState<string>('');
+  const [model, setModel] = useState<string>('');
+  const [minPrice, setMinPrice] = useState<number | string>('');
+  const [maxPrice, setMaxPrice] = useState<number | string>('');
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value);
+  const handleManufacturerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setManufacturer(event.target.value);
   };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(event.target.value);
+  const handleModelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setModel(event.target.value);
   };
 
-  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDuration(Number(event.target.value));
+  const handleMinPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMinPrice(event.target.value);
+  };
+
+  const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxPrice(event.target.value);
   };
 
   const filterVehicles = (vehicles: CarCardProps[]) => {
     return vehicles.filter(vehicle => {
-      const matchesCategory = category ? vehicle.vehicleSpec.manufacturer.toLowerCase().includes(category.toLowerCase()) : true;
-     
-      return matchesCategory;
+      const matchesManufacturer = manufacturer ? vehicle.vehicleSpec.manufacturer.toLowerCase().includes(manufacturer.toLowerCase()) : true;
+      const matchesModel = model ? vehicle.vehicleSpec.model.toLowerCase().includes(model.toLowerCase()) : true;
+      const matchesMinPrice = minPrice ? vehicle.rental_rate >= Number(minPrice) : true;
+      const matchesMaxPrice = maxPrice ? vehicle.rental_rate <= Number(maxPrice) : true;
+
+      return matchesManufacturer && matchesModel && matchesMinPrice && matchesMaxPrice;
     });
   };
 
   const filteredVehicles = vehicles ? filterVehicles(vehicles) : [];
 
-  if(isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
-  if(error) return <div>Error: Error Fetching</div>;
+  if (isLoading) return <div className="flex justify-center items-center h-screen"><ClipLoader color="#f00" size={150} /></div>;
+  if (error) return <div>Error: Error Fetching</div>;
 
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="mb-4 md:mb-0">
-            <label htmlFor="category" className="block text-lg font-medium mb-2">Category:</label>
+            <label htmlFor="manufacturer" className="block text-lg font-medium mb-2">Manufacturer:</label>
             <select
-              id="category"
-              value={category}
-              onChange={handleCategoryChange}
+              id="manufacturer"
+              value={manufacturer}
+              onChange={handleManufacturerChange}
               className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All</option>
@@ -64,22 +72,32 @@ const VehicleList =  () => {
             </select>
           </div>
           <div className="mb-4 md:mb-0">
-            <label htmlFor="startDate" className="block text-lg font-medium mb-2">Start Date:</label>
+            <label htmlFor="model" className="block text-lg font-medium mb-2">Model:</label>
             <input
-              type="date"
-              id="startDate"
-              value={startDate}
-              onChange={handleDateChange}
+              type="text"
+              id="model"
+              value={model}
+              onChange={handleModelChange}
               className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-4 md:mb-0">
-            <label htmlFor="duration" className="block text-lg font-medium mb-2">Duration (days):</label>
+            <label htmlFor="minPrice" className="block text-lg font-medium mb-2">Min Price:</label>
             <input
               type="number"
-              id="duration"
-              value={duration}
-              onChange={handleDurationChange}
+              id="minPrice"
+              value={minPrice}
+              onChange={handleMinPriceChange}
+              className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="mb-4 md:mb-0">
+            <label htmlFor="maxPrice" className="block text-lg font-medium mb-2">Max Price:</label>
+            <input
+              type="number"
+              id="maxPrice"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
               className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
