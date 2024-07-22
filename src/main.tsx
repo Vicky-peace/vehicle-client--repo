@@ -91,7 +91,11 @@ const router = createBrowserRouter([
 },
 {
   path: '/booking/:id',
-  element: <Layout><BookingPage /></Layout>,
+  element: ( 
+    <ProtectedRoute>
+       <Layout><BookingPage /></Layout>
+    </ProtectedRoute>
+),
   errorElement: <NotFound />,
 },
 {
