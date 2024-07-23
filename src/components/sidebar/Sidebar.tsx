@@ -3,10 +3,10 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/materia
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HistoryIcon from '@mui/icons-material/History';
 import BookIcon from '@mui/icons-material/Book';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from 'react-router-dom';
 import Logout from '../../pages/Dashboard/user/Logout';
 import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Sidenav: React.FC = () => {
     return (
@@ -44,11 +44,11 @@ const Sidenav: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText primary="Current Bookings" />
                 </ListItem>
-                <ListItem button component={Link} to="/dashboard/account-settings" className="hover:bg-gray-700">
-                    <ListItemIcon>
-                        <SettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Account Settings" />
+                <ListItem button component={Link} to="/dashboard/profile" className="hover:bg-gray-700">
+                <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+                    <ListItemText primary="Profile" />
                 </ListItem>
                 <ListItem button component={Link} to="/" className="hover:bg-gray-700">
                     <ListItemIcon>

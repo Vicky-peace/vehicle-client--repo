@@ -3,13 +3,24 @@ import { Card, CardContent, Typography } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { usersApi } from '../../../sevices/rtk-api/userApi';
 import { bookingsApi } from '../../../sevices/rtk-api/bookingApi';
+import { ClipLoader } from 'react-spinners';
 
 const AdminDashboard: React.FC = () => {
   const { data: bookingsData, error: bookingsError, isLoading: bookingsLoading } = bookingsApi.useGetBookingsQuery();
   const { data: usersData, error: usersError, isLoading: usersLoading } = usersApi.useGetUsersQuery();
 
-  if (bookingsLoading || usersLoading) return <div>Loading...</div>;
-  if (bookingsError || usersError) return <div>Error fetching data</div>;
+  if (bookingsLoading || usersLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader size={50} color="#123abc" />
+      </div>
+    );
+  }
+
+  if (bookingsError || usersError) {
+    return <div>Error fetching data</div>;
+  }
+
 
   const totalBookings = bookingsData ? bookingsData.length : 0;
   const totalRevenue = bookingsData

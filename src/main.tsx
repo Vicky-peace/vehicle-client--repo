@@ -81,7 +81,7 @@ const router = createBrowserRouter([
     { path: '', element: <DashboardOverview /> },
     { path: 'booking-history', element: <BookingHistory /> },
     { path: 'current-bookings', element: <CurrentBookings /> },
-    { path: 'account-settings', element: <AccountSettings /> },
+    { path: 'profile', element: <AccountSettings /> },
   
   ],
  },
