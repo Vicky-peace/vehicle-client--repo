@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../../sevices/slices/authSlice';
 import { toast } from 'react-toastify';
 import {api} from '../../../sevices/rtk-api/auth';
+import { ClipLoader } from 'react-spinners';
 
 import './login.scss';
 
@@ -23,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
   const [login] = api.useLoginMutation();
   const navigate = useNavigate();
 
-  const handleLogin = async (values: { email: string; password: string }) => {
+  const handleLogin = async (values: { email: string; password: string },{ setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
     try {
       const userData = await login(values).unwrap();
       dispatch(setUser(userData));
@@ -32,6 +33,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
     } catch (error: any) {
       const errorMessage = error.data?.error || 'Login failed. Invalid Credentials. Please try again.';
       toast.error(errorMessage);
+        } finally{
+          setSubmitting(false);
         }
   
   };
@@ -50,7 +53,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ switchToRegister }) => {
             <ErrorMessage name="email" component="div" className="error" />
             <Field type="password" name="password" placeholder="Password" />
             <ErrorMessage name="password" component="div" className="error" />
-            <button type="submit" disabled={isSubmitting}>Login</button>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <ClipLoader size={20} color="white" />
+                  <span className="ml-2">Logging in...</span>
+                </div>
+              ) : (
+                'Login'
+              )}
+            </button>
           </Form>
         )}
       </Formik>

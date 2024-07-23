@@ -6,6 +6,7 @@ import { setUser } from '../../../sevices/slices/authSlice';
 import './register.scss';
 import { toast } from 'react-toastify';
 import { api } from '../../../sevices/rtk-api/auth';
+import { ClipLoader } from 'react-spinners';
 
 const registerSchema = Yup.object().shape({
   full_name: Yup.string().required('Required'),
@@ -22,7 +23,7 @@ interface RegisterFormProps {
 const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
   const dispatch = useDispatch();
   const [register] = api.useRegisterMutation();
-  const handleRegister = async (values: { full_name: string; email: string; contact_phone: string; address: string; password: string }) => {
+  const handleRegister = async (values: { full_name: string; email: string; contact_phone: string; address: string; password: string }, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
     try {
       const userData = await register(values).unwrap();
       dispatch(setUser(userData));
@@ -31,6 +32,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
     } catch (error : any) {
       const errorMessage = error.data?.error || 'Registration failed. Please try again.';
       toast.error(errorMessage);
+    } finally{
+      setSubmitting(false);
     }
    
   };
@@ -55,7 +58,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ switchToLogin }) => {
             <ErrorMessage name="address" component="div" className="error" />
             <Field type="password" name="password" placeholder="Password" />
             <ErrorMessage name="password" component="div" className="error" />
-            <button type="submit" disabled={isSubmitting}>Register</button>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <ClipLoader size={20} color="white" />
+                  <span className="ml-2">Registering...</span>
+                </div>
+              ) : (
+                'Register'
+              )}
+            </button>
           </Form>
         )}
       </Formik>
