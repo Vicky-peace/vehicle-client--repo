@@ -65,9 +65,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ vehicle }) => {
       
       // Initiate payment
       handleMakePayment(newBooking.booking_id, totalAmount);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating booking:', error);
-      toast.error('Error creating booking');
+      const errorMessage = error.data?.error || 'Error creating booking';
+      toast.error(errorMessage);
     }
   };
 
