@@ -11,7 +11,7 @@ const VehicleList = () => {
   const [manufacturer, setManufacturer] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [minPrice, setMinPrice] = useState<number | string>('');
-  const [maxPrice, setMaxPrice] = useState<number | string>('');
+  const [maxPrice] = useState<number | string>('');
 
   const handleManufacturerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setManufacturer(event.target.value);
@@ -25,9 +25,6 @@ const VehicleList = () => {
     setMinPrice(event.target.value);
   };
 
-  const handleMaxPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMaxPrice(event.target.value);
-  };
 
   const filterVehicles = (vehicles: CarCardProps[]) => {
     return vehicles.filter(vehicle => {
@@ -91,16 +88,7 @@ const VehicleList = () => {
               className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="mb-4 md:mb-0">
-            <label htmlFor="maxPrice" className="block text-lg font-medium mb-2">Max Price:</label>
-            <input
-              type="number"
-              id="maxPrice"
-              value={maxPrice}
-              onChange={handleMaxPriceChange}
-              className="p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+         
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

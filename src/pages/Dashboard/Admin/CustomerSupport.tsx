@@ -43,9 +43,9 @@ const CustomerSupportTickets: React.FC = () => {
                     <Typography variant="body2" className="text-gray-700">{ticket.description}</Typography>
                     <Typography variant="body2" className="text-gray-700">{ticket.status}</Typography>
                     <div className="flex justify-between mt-4">
-                      <Button variant="contained" color="primary">
+                      {/* <Button variant="contained" color="primary">
                         Respond
-                      </Button>
+                      </Button> */}
                       <Button 
                         variant="contained" 
                         color="secondary" 
