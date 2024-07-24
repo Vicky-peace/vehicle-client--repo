@@ -34,6 +34,7 @@ import FleetManagement from './pages/Dashboard/Admin/FleetManagement.tsx';
 import PaymentSuccess from './PaymentSuccess.tsx';
 import PaymentFailed from './PaymentFailed.tsx';
 import UserDashboard from './pages/Dashboard/user/userDashboard.tsx';
+import Reports from './pages/Dashboard/Admin/Reports.tsx';
 
 
 
@@ -124,6 +125,7 @@ const router = createBrowserRouter([
     { path: 'manage-locations', element: <ManageLocations /> },
     { path: 'customer-support-tickets', element: <CustomerSupportTickets /> },
     { path: 'fleet-management', element: <FleetManagement /> },
+    { path: 'reports', element: <Reports/> },
   ],
 },
 

@@ -9,6 +9,7 @@ import SupportIcon from '@mui/icons-material/Support';
 import CommuteIcon from '@mui/icons-material/Commute';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import './AdminLayout.css';
 
 const AdminLayout: React.FC = () => {
@@ -86,6 +87,13 @@ const AdminLayout: React.FC = () => {
               <CommuteIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary="Fleet Management" className="text-white font-bold text-3xl" />
+          </ListItem>
+
+          <ListItem button component={Link} to="/admin/reports" className="hover:bg-blue-700 text-bold">
+            <ListItemIcon>
+              <AssessmentIcon style={{ color: 'white' }} />
+            </ListItemIcon>
+            <ListItemText primary="Reports" className="text-white font-bold text-3xl" />
           </ListItem>
           <ListItem button component={Link} to="/" className="hover:bg-blue-700 text-bold">
             <ListItemIcon>
