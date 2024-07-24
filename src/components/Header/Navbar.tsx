@@ -79,7 +79,6 @@ console.log(auth)
                                             />
                                             <div className="ml-4">
                                                 <p className="text-lg font-semibold">{user.full_name}</p>
-                                                <p className="text-sm text-gray-500">{user.role}</p>
                                             </div>
                                         </div>
                                         <hr className="my-2" />
