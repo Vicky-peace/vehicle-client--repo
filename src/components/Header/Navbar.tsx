@@ -78,7 +78,7 @@ console.log(auth)
                                                 className="w-10 h-10 rounded-full object-cover"
                                             />
                                             <div className="ml-4">
-                                                <p className="text-lg font-semibold">{user.name}</p>
+                                                <p className="text-lg font-semibold">{user.full_name}</p>
                                                 <p className="text-sm text-gray-500">{user.role}</p>
                                             </div>
                                         </div>
