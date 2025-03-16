@@ -74,7 +74,7 @@ const router = createBrowserRouter([
   path: '/dashboard',
   element:( 
     <ProtectedRoute>
-       <UserDashboard/>
+      <Layout> <UserDashboard/></Layout>
   </ProtectedRoute>
 ),
   errorElement: <NotFound/>,
